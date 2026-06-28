@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Orthopaedics for the Foundation Doctor — T&amp;O Teaching Series</title>
+<meta name="description" content="A four-session Trauma & Orthopaedics teaching series for final & penultimate year medical students." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================================
+   THEME
+   ========================================================================== */
+:root{
+  --bg:#0b1220;
+  --bg-grad-1:#0e1b34;
+  --bg-grad-2:#0b1220;
+  --surface:#ffffff;
+  --surface-2:#f4f7fb;
+  --ink:#0f1f33;
+  --ink-soft:#41566f;
+  --ink-faint:#7488a0;
+  --line:#e3eaf2;
+  --primary:#0e7490;       /* teal */
+  --primary-d:#0b5a72;
+  --primary-l:#e0f4f9;
+  --accent:#f59e0b;        /* gold/amber for game */
+  --accent-d:#b9770a;
+  --success:#16a34a;
+  --success-l:#e7f6ec;
+  --danger:#dc2626;
+  --violet:#6d4aff;
+  --radius:18px;
+  --radius-s:12px;
+  --shadow:0 10px 30px -12px rgba(8,22,43,.28);
+  --shadow-lg:0 24px 60px -18px rgba(8,22,43,.45);
+  --maxw:880px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);
+  background:radial-gradient(1200px 700px at 80% -10%, #14315a 0%, transparent 55%),
+             radial-gradient(900px 600px at -10% 10%, #0d3b46 0%, transparent 50%),
+             linear-gradient(160deg,var(--bg-grad-1),var(--bg-grad-2));
+  background-attachment:fixed;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+}
+h1,h2,h3,h4{font-family:'Lexend','Inter',sans-serif;line-height:1.15;margin:0 0 .4em;color:var(--ink)}
+p{margin:0 0 1em}
+a{color:var(--primary)}
+small{color:var(--ink-faint)}
+
+/* layout shell */
+#app{max-width:var(--maxw);margin:0 auto;padding:18px 16px 64px;min-height:100vh}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#dce8f5;padding:6px 4px 18px}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand .mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(145deg,#19c2d6,#0e7490);display:grid;place-items:center;font-size:20px;box-shadow:0 8px 20px -8px rgba(25,194,214,.8);flex:none}
+.brand .ttl{font-family:'Lexend';font-weight:700;font-size:15px;color:#fff;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand .sub{font-size:11.5px;color:#90b2d4}
+.chip{font-size:12px;background:rgba(255,255,255,.1);color:#cfe1f2;border:1px solid rgba(255,255,255,.16);padding:5px 11px;border-radius:999px;backdrop-filter:blur(6px);cursor:pointer;white-space:nowrap}
+.chip:hover{background:rgba(255,255,255,.18)}
+.chip.code{font-variant-numeric:tabular-nums;letter-spacing:.5px}
+
+/* cards */
+.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:26px 24px;animation:rise .45s cubic-bezier(.2,.8,.2,1)}
+.card + .card{margin-top:16px}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;font-family:'Lexend';font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);background:var(--primary-l);padding:6px 12px;border-radius:999px;margin-bottom:14px}
+.lede{font-size:16px;color:var(--ink-soft)}
+.muted{color:var(--ink-faint)}
+hr.sep{border:none;border-top:1px solid var(--line);margin:22px 0}
+
+/* buttons */
+.btn{appearance:none;border:none;cursor:pointer;font-family:'Lexend';font-weight:600;font-size:15.5px;
+  padding:14px 22px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  transition:transform .12s ease, box-shadow .2s ease, background .2s ease;text-decoration:none}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:linear-gradient(135deg,#12a3bd,#0e7490);color:#fff;box-shadow:0 12px 24px -10px rgba(14,116,144,.75)}
+.btn-primary:hover{box-shadow:0 16px 30px -10px rgba(14,116,144,.85)}
+.btn-accent{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#3a2600;box-shadow:0 12px 24px -10px rgba(245,158,11,.7)}
+.btn-ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+.btn-ghost:hover{background:#eaf0f7}
+.btn-block{width:100%}
+.btn[disabled]{opacity:1;cursor:not-allowed;background:#e7edf4 !important;color:#9fb0c4 !important;box-shadow:none !important}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.btn-sm{padding:9px 14px;font-size:13.5px;border-radius:10px}
+
+/* role / option selectors */
+.opts{display:grid;gap:11px;margin:6px 0 4px}
+.opt{position:relative;display:flex;align-items:center;gap:13px;padding:15px 16px;border:1.5px solid var(--line);border-radius:14px;cursor:pointer;background:var(--surface);transition:.15s}
+.opt:hover{border-color:#bcd6e4;background:#fafdff}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .tick{width:22px;height:22px;border-radius:50%;border:2px solid #cbd8e6;flex:none;display:grid;place-items:center;transition:.15s}
+.opt .tick::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--primary);transform:scale(0);transition:.15s}
+.opt .lbl{font-weight:500}
+.opt.checkbox .tick{border-radius:7px}
+.opt.checkbox .tick::after{border-radius:3px}
+.opt:has(input:checked){border-color:var(--primary);background:var(--primary-l);box-shadow:0 0 0 3px rgba(14,116,144,.1)}
+.opt:has(input:checked) .tick{border-color:var(--primary)}
+.opt:has(input:checked) .tick::after{transform:scale(1)}
+.opt.disabled{opacity:.45;pointer-events:none}
+.inline-other{margin-top:9px;display:none}
+.inline-other.show{display:block}
+
+/* text inputs */
+label.fld{display:block;font-weight:600;font-size:14px;margin:18px 0 7px;color:var(--ink)}
+label.fld .req{color:var(--danger)}
+input[type=text],input[type=date],textarea,select{
+  width:100%;font-family:inherit;font-size:15px;color:var(--ink);background:var(--surface);
+  border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;transition:.15s}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(14,116,144,.13)}
+textarea{min-height:92px;resize:vertical}
+.hint{font-size:12.5px;color:var(--ink-faint);margin-top:6px}
+
+/* likert / scale segmented control */
+.scale{display:flex;gap:8px;margin-top:6px}
+.scale.compact{gap:6px}
+.scale label{flex:1;position:relative;cursor:pointer}
+.scale input{position:absolute;opacity:0;pointer-events:none}
+.scale .seg{display:grid;place-items:center;padding:12px 0;border:1.5px solid var(--line);border-radius:11px;font-family:'Lexend';font-weight:700;font-size:16px;color:var(--ink-soft);background:var(--surface);transition:.13s;line-height:1}
+.scale label:hover .seg{border-color:#bcd6e4}
+.scale input:checked + .seg{background:var(--primary);border-color:var(--primary);color:#fff;transform:translateY(-2px);box-shadow:0 8px 16px -8px rgba(14,116,144,.7)}
+.scale.conf input:checked + .seg{background:var(--accent);border-color:var(--accent);color:#3a2600;box-shadow:0 8px 16px -8px rgba(245,158,11,.7)}
+.scale-ends{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-faint);margin-top:7px}
+
+/* statement (likert) rows */
+.statement{padding:16px 0;border-top:1px solid var(--line)}
+.statement:first-of-type{border-top:none}
+.statement .q{font-weight:600;font-size:14.5px;margin-bottom:4px}
+
+/* survey blocks */
+.block{margin-top:22px}
+.block > h3{font-size:16px;display:flex;align-items:center;gap:9px}
+.numpill{width:25px;height:25px;border-radius:8px;background:var(--primary-l);color:var(--primary-d);font-family:'Lexend';font-weight:700;font-size:13px;display:grid;place-items:center;flex:none}
+
+/* aim / info callouts */
+.callout{background:linear-gradient(135deg,#0e7490,#0b5a72);color:#eafaff;border-radius:16px;padding:20px 22px;box-shadow:0 16px 30px -16px rgba(14,116,144,.8)}
+.callout h3{color:#fff;font-size:14px;letter-spacing:.1em;text-transform:uppercase;opacity:.85;margin-bottom:8px}
+.callout p{margin:0;font-size:16.5px;line-height:1.45;font-family:'Lexend';font-weight:500}
+.info{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.info.privacy{background:#f3f0ff;border-color:#e0d8ff}
+.info h4{margin:0 0 6px;font-size:14px;display:flex;align-items:center;gap:8px}
+.info p,.info li{font-size:13.5px;color:var(--ink-soft)}
+.info ul{margin:.3em 0;padding-left:20px}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;margin:4px 0 2px}
+.meta-grid div{font-size:13.5px}
+.meta-grid b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);font-weight:700}
+
+/* timetable */
+.tt{width:100%;border-collapse:collapse;margin-top:6px;font-size:13.5px}
+.tt th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);padding:8px 10px;border-bottom:2px solid var(--line)}
+.tt td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.tt .n{font-family:'Lexend';font-weight:700;color:var(--primary);width:30px}
+.tt .topic{font-weight:600}
+.tt .focus{color:var(--ink-soft);font-size:12.5px}
+
+/* steps list (order of events) */
+.steps{display:grid;gap:0;margin-top:6px}
+.step{display:flex;gap:14px;padding:14px 0;position:relative}
+.step .dot{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:17px;background:var(--primary-l);border:2px solid #bfe3ee;z-index:1}
+.step:not(:last-child) .dot::after{content:"";position:absolute;left:16px;top:46px;bottom:-2px;width:2px;background:linear-gradient(var(--line),transparent)}
+.step .body h4{margin:2px 0 3px;font-size:15px}
+.step .body p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+
+/* ============================ GAME MAP ============================ */
+.map-head{text-align:center;color:#eaf2fb;margin:4px 0 22px}
+.map-head h1{color:#fff;font-size:26px;margin-bottom:6px}
+.map-head p{color:#a9c4de;margin:0;font-size:14px}
+.progress-wrap{max-width:340px;margin:16px auto 0}
+.progress-track{height:10px;background:rgba(255,255,255,.14);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:999px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.progress-lbl{color:#a9c4de;font-size:12px;text-align:center;margin-top:8px}
+
+.map{position:relative;display:flex;flex-direction:column;gap:30px;padding:8px 0 10px;max-width:560px;margin:0 auto}
+.node{position:relative;display:flex;align-items:center;gap:18px;width:100%}
+.node:nth-child(even){flex-direction:row-reverse;text-align:right}
+.node .orb-wrap{position:relative;flex:none}
+.node .orb{width:88px;height:88px;border-radius:26px;display:grid;place-items:center;font-size:34px;position:relative;
+  transition:transform .18s ease, box-shadow .2s ease;border:3px solid rgba(255,255,255,.25)}
+.node.locked .orb{background:rgba(255,255,255,.07);color:#6c84a0;border-color:rgba(255,255,255,.1);filter:grayscale(1)}
+.node.unlocked .orb{background:linear-gradient(145deg,#19c2d6,#0e7490);color:#fff;cursor:pointer;box-shadow:0 18px 34px -14px rgba(25,194,214,.85)}
+.node.unlocked .orb:hover{transform:translateY(-4px) scale(1.03)}
+.node.done .orb{background:linear-gradient(145deg,#34d27a,#16a34a);color:#fff;cursor:pointer;box-shadow:0 18px 34px -14px rgba(22,163,74,.8)}
+.node .orb .lvlnum{position:absolute;top:-10px;left:-10px;background:#0b1220;color:#fff;border:2px solid rgba(255,255,255,.5);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:'Lexend';font-weight:800;font-size:13px}
+.node:nth-child(even) .orb .lvlnum{left:auto;right:-10px}
+.node .badge{position:absolute;bottom:-8px;right:-8px;font-size:22px;filter:drop-shadow(0 3px 4px rgba(0,0,0,.3))}
+.node:nth-child(even) .badge{right:auto;left:-8px}
+.node .info-c{flex:1;min-width:0}
+.node .info-c .lvl-k{font-family:'Lexend';font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7fa6c9}
+.node .info-c h3{color:#fff;font-size:18px;margin:2px 0 4px}
+.node.locked .info-c h3{color:#8ea4bd}
+.node .info-c p{color:#9db8d4;font-size:13px;margin:0}
+.node .info-c .state{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px}
+.node.locked .state{background:rgba(255,255,255,.07);color:#7e93ac}
+.node.unlocked .state{background:rgba(25,194,214,.18);color:#7fe6f4}
+.node.done .state{background:rgba(52,210,122,.18);color:#86efac}
+.node.unlocked .orb{animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 18px 34px -14px rgba(25,194,214,.85),0 0 0 0 rgba(25,194,214,.45)}50%{box-shadow:0 18px 34px -14px rgba(25,194,214,.85),0 0 0 14px rgba(25,194,214,0)}}
+.connector{position:absolute;left:50%;width:3px;background:repeating-linear-gradient(rgba(255,255,255,.28) 0 7px,transparent 7px 15px);z-index:0}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* lesson active / stopwatch */
+.thanks-hero{text-align:center;padding:8px 0 4px}
+.thanks-hero .big{font-size:54px;line-height:1;margin-bottom:10px}
+.stopwatch{font-family:'Lexend';font-weight:800;font-variant-numeric:tabular-nums;font-size:60px;letter-spacing:1px;text-align:center;color:var(--primary-d);margin:18px 0 6px}
+.sw-card{background:linear-gradient(160deg,#f0fbfd,#e0f4f9);border:1px solid #bfe3ee;border-radius:18px;padding:22px;text-align:center}
+.sw-live{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--primary-d);text-transform:uppercase;letter-spacing:.1em}
+.sw-live .blink{width:9px;height:9px;border-radius:50%;background:var(--danger);animation:blink 1.1s infinite}
+@keyframes blink{50%{opacity:.25}}
+
+/* objective list */
+.obj{display:grid;gap:9px;margin:6px 0 2px}
+.obj li{list-style:none;display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--ink-soft)}
+.obj li .ic{color:var(--primary);flex:none;margin-top:2px}
+ul.objx{margin:0;padding:0}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#0f1f33;color:#fff;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.3s;z-index:99}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* code reveal */
+.code-display{font-family:'Lexend';font-weight:800;font-size:clamp(24px,7vw,38px);letter-spacing:3px;text-align:center;color:var(--primary-d);
+  background:linear-gradient(160deg,#f0fbfd,#e0f4f9);border:2px dashed #7fc6d8;border-radius:16px;padding:22px 12px;font-variant-numeric:tabular-nums;word-break:break-all}
+
+/* footer / lead link */
+.foot{text-align:center;margin-top:30px;color:#7e98b6;font-size:12.5px}
+.foot a{color:#9db8d4;cursor:pointer;text-decoration:underline}
+
+/* ============================ MASTER ============================ */
+.master-tabs{display:flex;gap:8px;background:rgba(255,255,255,.08);padding:6px;border-radius:14px;margin-bottom:16px}
+.master-tabs button{flex:1;border:none;background:transparent;color:#bcd2e8;font-family:'Lexend';font-weight:600;font-size:14px;padding:11px;border-radius:10px;cursor:pointer}
+.master-tabs button.active{background:#fff;color:var(--primary-d);box-shadow:var(--shadow)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:6px 0}
+.kpi{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:16px}
+.kpi .v{font-family:'Lexend';font-weight:800;font-size:26px;color:var(--primary-d);line-height:1}
+.kpi .l{font-size:12px;color:var(--ink-faint);margin-top:6px}
+.kpi .v small{font-size:14px;color:var(--ink-faint);font-weight:600}
+.dtable{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
+.dtable th,.dtable td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:center;font-variant-numeric:tabular-nums}
+.dtable th{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);font-weight:700;background:var(--surface-2)}
+.dtable td:first-child,.dtable th:first-child{text-align:left;font-weight:600}
+.dtable tr.overall td{border-top:2px solid var(--primary);font-weight:700;background:var(--primary-l)}
+.dtable .pos{color:var(--success);font-weight:700}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.theme-list{margin:0;padding-left:0;list-style:none;display:grid;gap:8px}
+.theme-list li{background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--primary);border-radius:10px;padding:10px 13px;font-size:13.5px;color:var(--ink-soft)}
+.theme-list li .tag{font-size:10.5px;font-weight:700;color:var(--primary-d);text-transform:uppercase;letter-spacing:.05em;margin-right:7px}
+.empty{color:var(--ink-faint);font-size:13.5px;font-style:italic;padding:8px 0}
+.save-pill{font-size:12px;color:var(--success);font-weight:600;opacity:0;transition:.3s}
+.save-pill.show{opacity:1}
+.lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+.report-doc h2{font-size:20px;border-bottom:2px solid var(--primary);padding-bottom:8px;margin-top:26px}
+.report-doc h2:first-child{margin-top:0}
+.sync-note{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:12px 14px;font-size:13px;display:flex;gap:9px;align-items:flex-start}
+
+@media (max-width:560px){
+  .card{padding:20px 16px}
+  .meta-grid,.lead-grid{grid-template-columns:1fr}
+  .node .orb{width:74px;height:74px;font-size:28px}
+  .stopwatch{font-size:46px}
+  .scale{gap:5px}
+  .scale .seg{padding:11px 0;font-size:14px}
+}
+
+/* print (report) */
+@media print{
+  body{background:#fff}
+  .topbar,.foot,.master-tabs,.no-print,.btn{display:none !important}
+  #app{max-width:100%;padding:0}
+  .card{box-shadow:none;padding:0;animation:none}
+  .kpi,.info,.dtable th{background:#fff !important}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast"></div>
+
+<script>
+/* ============================================================================
+   CONFIGURATION
+   ----------------------------------------------------------------------------
+   MASTER_CODE  : the programme lead's private 16-digit code (created at
+                  inception). Anyone entering this on the landing screen reaches
+                  the master report + analytics. Keep it private.
+   PROGRAMME_ID : namespaces this cohort's data (lets you reuse one Firebase
+                  project for future cohorts — just change this string).
+   FIREBASE_CONFIG : leave blank to run fully OFFLINE (single-device demo /
+                  privacy mode). Paste your Firebase web-app config to switch on
+                  real-time cloud sync so students' devices feed your master
+                  pages. See SETUP.md for the 5-minute steps.
+   ========================================================================== */
+const MASTER_CODE  = "8555962424297606";
+const PROGRAMME_ID = "to-100baca1";
+
+const FIREBASE_CONFIG = {
+  // apiKey: "...",
+  // authDomain: "...",
+  // projectId: "...",
+  // storageBucket: "...",
+  // messagingSenderId: "...",
+  // appId: "..."
+};
+
+/* ============================================================================
+   PROGRAMME CONTENT (from the source documents)
+   ========================================================================== */
+const PROGRAMME = {
+  title:"Orthopaedics for the Foundation Doctor",
+  subtitle:"A four-session T&O teaching series",
+  lead:"Lukenny Freire Tinta, FY1",
+  hospital:"Croydon University Hospital",
+  audience:"Final-year & penultimate-year medical students",
+  format:"Weekly · ~45–60 min · case-based · in person",
+  duration:"4 sessions across 1–2 months",
+  venue:"PGMC",
+  aim:"To build budding foundation doctors’ confidence in recognising, describing and safely initiating management of common and emergency orthopaedic presentations, through a sustained, case-based series with feedback built into each session."
+};
+
+const ROLES = [
+  "Final Year Medical Student",
+  "Penultimate Year Medical Student",
+  "Other"
+];
+
+const EXPOSURE = ["None","A little","A full rotation","More"];
+
+// Pre-series confidence topics (needs assessment)
+const NEEDS_TOPICS = [
+  {key:"fractures",   label:"Describing fractures systematically & interpreting orthopaedic X-rays"},
+  {key:"nof",         label:"Assessing & optimising the hip fracture (NOF) patient"},
+  {key:"limb",        label:"Initial management of common limb injuries on call / in ED"},
+  {key:"emergencies", label:"Recognising orthopaedic emergencies (compartment syndrome, septic arthritis, cauda equina…)"}
+];
+
+const PRIORITIES = [
+  "Fractures & X-ray interpretation",
+  "The hip fracture (NOF) patient",
+  "Common limb injuries on call / in ED",
+  "Orthopaedic emergencies",
+  "Other"
+];
+
+// The four lessons (levels)
+const LESSONS = [
+  {
+    n:1, icon:"🩻", short:"Fractures & imaging",
+    title:"Fracture fundamentals & orthopaedic imaging",
+    focus:"Describing fractures systematically and interpreting plain radiographs — the shared framework the series builds on.",
+    overview:"We start with the language and logic of orthopaedics. You’ll learn a reliable, repeatable way to describe any fracture and a structured approach to reading plain films — the shared framework every later session relies on. Built around real radiographs and on-call scenarios.",
+    confLabel:"describing fractures systematically & interpreting orthopaedic X-rays",
+    objectives:[
+      "Describe any fracture systematically — site, pattern, displacement, angulation, rotation, intra- vs extra-articular, open vs closed.",
+      "Apply a structured approach to plain radiographs (adequacy, two views, the joint above and below).",
+      "Recognise common fracture patterns and the language used to communicate them clearly to a senior.",
+      "Formulate a safe initial plan and know when to image further or escalate."
+    ]
+  },
+  {
+    n:2, icon:"🦴", short:"Hip fracture (NOF)",
+    title:"The hip fracture (NOF) patient",
+    focus:"Assessment, peri-operative optimisation and the Best Practice Tariff 36-hour standard.",
+    overview:"The neck-of-femur fracture is one of the commonest and highest-stakes presentations you’ll meet. We work through assessment, peri-operative optimisation and the systems around the patient — including the Best Practice Tariff and the 36-hour-to-theatre standard — using a case from front door to theatre.",
+    confLabel:"assessing & optimising the hip fracture (NOF) patient",
+    objectives:[
+      "Assess a patient with a suspected neck-of-femur fracture (history, examination, radiograph interpretation).",
+      "Outline peri-operative optimisation: analgesia and fascia iliaca block, fluids, bone health and comorbidities.",
+      "Explain the Best Practice Tariff and the 36-hour-to-theatre standard and why they matter.",
+      "Recognise the role of orthogeriatric / MDT care in preventing common complications."
+    ]
+  },
+  {
+    n:3, icon:"🤕", short:"Limb injuries",
+    title:"Common limb injuries on call & in ED",
+    focus:"High-volume presentations a junior is asked to assess and manage first (e.g. distal radius, ankle, shoulder dislocation).",
+    overview:"The bread-and-butter of being on call. We cover the high-volume limb injuries you’ll be asked to assess and manage first — distal radius, ankle, shoulder dislocation and friends — with practical principles for reduction, immobilisation and safe analgesia, and clear rules for when to call for help.",
+    confLabel:"initial management of common limb injuries on call / in ED",
+    objectives:[
+      "Assess and initially manage high-volume limb injuries (e.g. distal radius, ankle, shoulder dislocation).",
+      "Apply the principles of reduction, immobilisation and safe analgesia / sedation.",
+      "Perform and document a neurovascular assessment before and after any intervention.",
+      "Recognise red flags and apply clear criteria for senior referral and follow-up."
+    ]
+  },
+  {
+    n:4, icon:"🚨", short:"Emergencies",
+    title:"Orthopaedic emergencies: the can’t-miss diagnoses",
+    focus:"Compartment syndrome, septic arthritis, cauda equina, open fractures and neurovascular compromise.",
+    overview:"The session that could change an outcome. We focus on the can’t-miss diagnoses — compartment syndrome, septic arthritis, cauda equina, open fractures and neurovascular compromise — how to spot them early, the time-critical first steps, and how to escalate safely when minutes matter.",
+    confLabel:"recognising orthopaedic emergencies (compartment syndrome, septic arthritis, cauda equina…)",
+    objectives:[
+      "Recognise the can’t-miss orthopaedic emergencies: compartment syndrome, septic arthritis, cauda equina, open fractures, neurovascular compromise.",
+      "Describe the key features that distinguish these from benign presentations.",
+      "Initiate time-critical first management and escalation for each.",
+      "Understand the consequences of a missed or delayed diagnosis and how to safety-net."
+    ]
+  }
+];
+
+// The 6 feedback statements (Likert 1–5)
+const FEEDBACK_Q = [
+  "The session was relevant to my clinical role.",
+  "The content was pitched at an appropriate level.",
+  "The material was clearly explained and well organised.",
+  "The session met its stated learning objectives.",
+  "I feel more confident in this topic than before the session.",
+  "I would recommend this session to a colleague."
+];
+
+/* ============================================================================
+   DATA STORE  (localStorage + optional Firebase Firestore)
+   ========================================================================== */
+const cloudEnabled = !!(FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey);
+const LKEY = (sub) => `to:${PROGRAMME_ID}:${sub}`;
+let db = null;
+
+function loadScript(src){
+  return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); });
+}
+
+const Store = {
+  ready:false,
+  async init(){
+    if(cloudEnabled){
+      try{
+        await loadScript("https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js");
+        await loadScript("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js");
+        firebase.initializeApp(FIREBASE_CONFIG);
+        db = firebase.firestore();
+      }catch(e){ console.error("Firebase init failed — falling back to offline.",e); db=null; }
+    }
+    this.ready=true;
+  },
+  _col(){ return db.collection("programmes").doc(PROGRAMME_ID).collection("students"); },
+  _metaDoc(){ return db.collection("programmes").doc(PROGRAMME_ID).collection("meta").doc("report"); },
+
+  async saveStudent(rec){
+    rec.updatedAt = Date.now();
+    localStorage.setItem(LKEY("student:"+rec.syncCode), JSON.stringify(rec));
+    if(db){ try{ await this._col().doc(rec.syncCode).set(rec,{merge:true}); }catch(e){ console.error("cloud save failed",e);} }
+  },
+  async getStudent(code){
+    if(db){ try{ const d=await this._col().doc(code).get(); if(d.exists) return d.data(); }catch(e){ console.error(e);} }
+    const raw=localStorage.getItem(LKEY("student:"+code));
+    return raw?JSON.parse(raw):null;
+  },
+  _localStudents(){
+    const out=[]; const pre=LKEY("student:");
+    for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.startsWith(pre)){ try{out.push(JSON.parse(localStorage.getItem(k)));}catch(e){} } }
+    return out;
+  },
+  subscribeStudents(cb){
+    if(db){
+      return this._col().onSnapshot(snap=>{ cb(snap.docs.map(d=>d.data())); }, err=>console.error(err));
+    }
+    // offline: poll + storage events
+    const tick=()=>cb(this._localStudents());
+    tick();
+    const onStorage=(e)=>{ if(e.key&&e.key.startsWith(LKEY("student:"))) tick(); };
+    window.addEventListener("storage",onStorage);
+    const iv=setInterval(tick,2000);
+    return ()=>{ window.removeEventListener("storage",onStorage); clearInterval(iv); };
+  },
+  async saveMaster(data){
+    localStorage.setItem(LKEY("meta:report"),JSON.stringify(data));
+    if(db){ try{ await this._metaDoc().set(data,{merge:true}); }catch(e){ console.error(e);} }
+  },
+  async getMaster(){
+    if(db){ try{ const d=await this._metaDoc().get(); if(d.exists) return d.data(); }catch(e){ console.error(e);} }
+    const raw=localStorage.getItem(LKEY("meta:report"));
+    return raw?JSON.parse(raw):{};
+  }
+};
+
+/* ============================================================================
+   APP STATE
+   ========================================================================== */
+const state = {
+  screen:"landing",
+  student:null,        // current student record
+  pendingRole:null,    // role chosen on landing (before code generated)
+  pendingRoleOther:"",
+  currentLesson:null,
+  rows:[],             // master: computed response rows
+  masterMeta:{},
+  masterTab:"report",
+  masterUnsub:null
+};
+let swInterval=null;
+
+const app = document.getElementById("app");
+const esc = (s)=> (s==null?"":String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $ = (sel,root=document)=>root.querySelector(sel);
+const $$ = (sel,root=document)=>Array.from(root.querySelectorAll(sel));
+
+function toast(msg){
+  const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),2200);
+}
+function genCode(){ let s=""; for(let i=0;i<16;i++) s+=Math.floor(Math.random()*10); return s; }
+function groupCode(c){ return (c||"").replace(/(.{4})/g,"$1 ").trim(); }
+function normCode(c){ return (c||"").replace(/\D/g,""); }
+function roleLabel(rec){ return rec.role==="Other" ? ("Other: "+(rec.roleOther||"—")) : rec.role; }
+function todayISO(){ const d=new Date(); return d.toISOString().slice(0,10); }
+
+async function copyText(txt){
+  try{ await navigator.clipboard.writeText(txt); return true; }
+  catch(e){
+    try{ const ta=document.createElement("textarea"); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); return true; }
+    catch(_){ return false; }
+  }
+}
+
+/* ---- lesson progress helpers ---- */
+function lessonRec(n){ return (state.student&&state.student.lessons&&state.student.lessons[n])||null; }
+function isComplete(n){ const l=lessonRec(n); return !!(l&&l.feedback); }
+function isActive(n){ const l=lessonRec(n); return !!(l&&l.startedAt&&!l.endedAt&&!l.feedback); }
+function isUnlocked(n){ return n===1 || isComplete(n-1); }
+function completedCount(){ return LESSONS.filter(l=>isComplete(l.n)).length; }
+
+/* ============================================================================
+   NAVIGATION + SHELL
+   ========================================================================== */
+function navigate(screen,opts={}){
+  if(swInterval){ clearInterval(swInterval); swInterval=null; }
+  if(state.masterUnsub && screen!=="master"){ state.masterUnsub(); state.masterUnsub=null; }
+  state.screen=screen;
+  if(opts.lesson!=null) state.currentLesson=opts.lesson;
+  render();
+  window.scrollTo({top:0,behavior:"instant"in window?"instant":"auto"});
+}
+
+function shellTop(){
+  const rec=state.student;
+  let right="";
+  if(state.screen==="master"){
+    right=`<button class="chip" data-act="exit-master">Exit ⤴</button>`;
+  } else if(rec && rec.syncCode){
+    right=`<button class="chip code" data-act="show-menu" title="Your sync code">🔑 ${groupCode(rec.syncCode)}</button>`;
+  }
+  return `<div class="topbar">
+    <div class="brand">
+      <div class="mark">🦴</div>
+      <div style="min-width:0">
+        <div class="ttl">${esc(PROGRAMME.title)}</div>
+        <div class="sub">${esc(PROGRAMME.subtitle)}</div>
+      </div>
+    </div>
+    ${right}
+  </div>`;
+}
+
+function shellFoot(){
+  if(state.screen==="master") return "";
+  return `<div class="foot">
+    ${esc(PROGRAMME.lead)} · ${esc(PROGRAMME.hospital)}<br/>
+    <a data-act="lead">Programme lead access</a>
+  </div>`;
+}
+
+function render(){
+  let body="";
+  switch(state.screen){
+    case "landing":     body=scrLanding(); break;
+    case "code":        body=scrCode(); break;
+    case "overview":    body=scrOverview(); break;
+    case "survey":      body=scrSurvey(); break;
+    case "map":         body=scrMap(); break;
+    case "lessonIntro": body=scrLessonIntro(); break;
+    case "lessonActive":body=scrLessonActive(); break;
+    case "feedback":    body=scrFeedback(); break;
+    case "done":        body=scrDone(); break;
+    case "leadGate":    body=scrLeadGate(); break;
+    case "master":      body=scrMaster(); break;
+    default: body=scrLanding();
+  }
+  app.innerHTML = shellTop() + body + shellFoot();
+  bindGlobal();
+  if(typeof state._afterRender==="function"){ const f=state._afterRender; state._afterRender=null; f(); }
+}
+
+function bindGlobal(){
+  $$('[data-act="lead"]').forEach(b=>b.onclick=()=>navigate("leadGate"));
+  $$('[data-act="exit-master"]').forEach(b=>b.onclick=()=>{ if(state.masterUnsub){state.masterUnsub();state.masterUnsub=null;} navigate(state.student?"map":"landing"); });
+  $$('[data-act="show-menu"]').forEach(b=>b.onclick=showMenu);
+}
+
+function showMenu(){
+  const c=state.student;
+  const ok = confirm(`Your sync code:\n\n${groupCode(c.syncCode)}\n\nKeep it safe — it links your progress and feedback.\n\nPress OK to copy it, or Cancel to close.`);
+  if(ok){ copyText(c.syncCode).then(()=>toast("Sync code copied")); }
+}
+
+/* ============================================================================
+   SCREEN: LANDING (role + gated button)
+   ========================================================================== */
+function scrLanding(){
+  const resumeExists = !!localStorage.getItem(LKEY("last"));
+  return `<div class="card">
+    <span class="eyebrow">🩺 Welcome</span>
+    <h1>${esc(PROGRAMME.title)}</h1>
+    <p class="lede">${esc(PROGRAMME.subtitle)} for ${esc(PROGRAMME.audience.toLowerCase())}. Built around real cases, with feedback woven into every session.</p>
+    <hr class="sep"/>
+    <h3>First, tell us your role</h3>
+    <p class="muted" style="font-size:14px;margin-top:-2px">This is the only thing we ask before generating your private, anonymous sync code.</p>
+    <div class="opts" id="roleOpts">
+      ${ROLES.map((r,i)=>`
+        <label class="opt">
+          <input type="radio" name="role" value="${esc(r)}" ${state.pendingRole===r?"checked":""}/>
+          <span class="tick"></span><span class="lbl">${esc(r)}</span>
+        </label>`).join("")}
+    </div>
+    <div class="inline-other ${state.pendingRole==="Other"?"show":""}" id="otherWrap">
+      <input type="text" id="roleOther" placeholder="Please specify your role" value="${esc(state.pendingRoleOther)}" />
+    </div>
+    <div class="btn-row" style="margin-top:22px">
+      <button class="btn btn-primary btn-block" id="genBtn" disabled>Get your unique sync code →</button>
+    </div>
+    ${resumeExists?`<div style="text-align:center;margin-top:16px"><a data-act="resume" style="cursor:pointer;font-size:14px">Already started? Resume with your sync code</a></div>`:
+      `<div style="text-align:center;margin-top:16px"><a data-act="resume" style="cursor:pointer;font-size:14px;color:var(--ink-faint)">Already have a sync code? Resume</a></div>`}
+  </div>`;
+}
+
+function bindLanding(){
+  const genBtn=$("#genBtn");
+  const otherWrap=$("#otherWrap");
+  const otherInput=$("#roleOther");
+  function refresh(){
+    const sel=$('input[name=role]:checked');
+    state.pendingRole = sel?sel.value:null;
+    const isOther = state.pendingRole==="Other";
+    otherWrap.classList.toggle("show",isOther);
+    if(isOther) state.pendingRoleOther = otherInput?otherInput.value.trim():"";
+    const valid = !!state.pendingRole && (!isOther || (state.pendingRoleOther||"").length>0);
+    genBtn.disabled = !valid;
+  }
+  $$('input[name=role]').forEach(r=>r.onchange=refresh);
+  if(otherInput) otherInput.oninput=refresh;
+  refresh();
+  genBtn.onclick=async()=>{
+    const code=genCode();
+    state.student={
+      syncCode:code, role:state.pendingRole, roleOther:state.pendingRoleOther,
+      createdAt:Date.now(), needs:null, lessons:{}
+    };
+    localStorage.setItem(LKEY("last"),code);
+    await Store.saveStudent(state.student);
+    navigate("code");
+  };
+  $$('[data-act="resume"]').forEach(b=>b.onclick=resumeFlow);
+}
+
+async function resumeFlow(){
+  const input=prompt("Enter your 16-digit sync code:");
+  if(!input) return;
+  const code=normCode(input);
+  if(code.length!==16){ toast("That code isn’t 16 digits"); return; }
+  if(code===MASTER_CODE){ navigate("master"); return; }
+  const rec=await Store.getStudent(code);
+  if(!rec){ toast("No progress found for that code"); return; }
+  state.student=rec; localStorage.setItem(LKEY("last"),code);
+  routeResume();
+}
+
+/* ============================================================================
+   SCREEN: SYNC CODE REVEAL
+   ========================================================================== */
+function scrCode(){
+  const c=state.student.syncCode;
+  return `<div class="card">
+    <span class="eyebrow">🔑 Your sync code</span>
+    <h1>This is your key for the whole series</h1>
+    <p class="lede">It’s anonymous — we never ask for your name or email. This code links your needs assessment and session feedback so we can measure how your confidence grows.</p>
+    <div class="code-display" id="codeBox">${groupCode(c)}</div>
+    <div class="btn-row" style="margin-top:16px">
+      <button class="btn btn-ghost" id="copyBtn">📋 Copy code</button>
+      <button class="btn btn-primary" style="flex:1" id="contBtn">Continue →</button>
+    </div>
+    <div class="info" style="margin-top:18px">
+      <h4>⚠️ Save it somewhere safe</h4>
+      <p style="margin:0">Screenshot it or note it down. You’ll use the same code at every session and it’s the only way to pick up where you left off (including on another device).</p>
+    </div>
+  </div>`;
+}
+function bindCode(){
+  $("#copyBtn").onclick=async()=>{ const ok=await copyText(state.student.syncCode); toast(ok?"Sync code copied ✓":"Copy failed — note it manually"); };
+  $("#contBtn").onclick=()=>navigate("overview");
+}
+
+/* ============================================================================
+   SCREEN: ORDER OF EVENTS / OVERVIEW
+   ========================================================================== */
+function scrOverview(){
+  const tt=LESSONS.map(l=>`<tr>
+      <td class="n">${l.n}</td>
+      <td><div class="topic">${esc(l.title)}</div><div class="focus">${esc(l.focus)}</div></td>
+    </tr>`).join("");
+  return `<div class="card">
+    <span class="eyebrow">🗺️ How the series works</span>
+    <h1>Here’s the journey ahead</h1>
+    <p class="lede">A quick look at the aim, the running order and how your feedback shapes the sessions — then you’ll complete a short needs assessment.</p>
+
+    <div class="callout" style="margin:6px 0 4px">
+      <h3>The aim</h3>
+      <p>${esc(PROGRAMME.aim)}</p>
+    </div>
+
+    <div class="meta-grid" style="margin-top:18px">
+      <div><b>Lead</b>${esc(PROGRAMME.lead)}</div>
+      <div><b>Audience</b>${esc(PROGRAMME.audience)}</div>
+      <div><b>Format</b>${esc(PROGRAMME.format)}</div>
+      <div><b>Duration</b>${esc(PROGRAMME.duration)}</div>
+      <div><b>Venue</b>${esc(PROGRAMME.venue)}</div>
+      <div><b>Sessions</b>4 case-based lessons</div>
+    </div>
+
+    <hr class="sep"/>
+    <h3>The order of events</h3>
+    <div class="steps">
+      <div class="step"><div class="dot">📝</div><div class="body"><h4>1 · Needs assessment (pre-series survey)</h4><p>A short, anonymous survey before Session 1 — it sets the group’s priorities and a baseline we can measure against at the end. You’ll complete this next.</p></div></div>
+      <div class="step"><div class="dot">📚</div><div class="body"><h4>2 · Four case-based lessons</h4><p>Worked through in order — each unlocks the next. See the timetable below.</p></div></div>
+      <div class="step"><div class="dot">🔁</div><div class="body"><h4>3 · Evaluation &amp; feedback throughout</h4><p>Built into every step, not bolted on at the end (details below).</p></div></div>
+    </div>
+
+    <hr class="sep"/>
+    <h3>Timetable</h3>
+    <table class="tt"><thead><tr><th>#</th><th>Session &amp; focus</th></tr></thead><tbody>${tt}</tbody></table>
+
+    <hr class="sep"/>
+    <h3>Evaluation &amp; feedback — closing the loop</h3>
+    <div class="info">
+      <ul style="margin:0;padding-left:18px">
+        <li>A short <b>needs assessment</b> before Session 1 sets priorities and baseline confidence.</li>
+        <li><b>Pre- and post-session self-rated confidence</b> is captured for every lesson — you’ll rate your confidence before you start and again afterwards.</li>
+        <li><b>Anonymous written feedback</b> after every session is reviewed and used to shape the next one.</li>
+        <li>An <b>end-of-series summary</b> compares your baseline vs final confidence and pulls together the themes from everyone’s comments.</li>
+      </ul>
+    </div>
+
+    <div class="info privacy" style="margin-top:14px">
+      <h4>🔒 How your information will be used</h4>
+      <p>Your responses are <b>anonymous</b>. You are identified only by your 16-digit sync code — never by name or email.</p>
+      <ul>
+        <li>Your sync code links your needs assessment and session feedback so we can measure how confidence changes across the series.</li>
+        <li>Results are sent to the <b>programme lead’s master dashboard</b>, where they appear as aggregate figures and against your sync code only.</li>
+        <li>Data is used solely to evaluate and improve this teaching series (and may inform a teaching portfolio, poster or QI write-up).</li>
+        ${cloudEnabled?`<li>Data is stored in the programme lead’s own secure cloud project.</li>`:`<li>In this build, data stays on your device until the programme lead collects it.</li>`}
+      </ul>
+    </div>
+
+    <div class="btn-row" style="margin-top:22px">
+      <button class="btn btn-primary btn-block" id="toSurvey">Start the needs assessment →</button>
+    </div>
+  </div>`;
+}
+function bindOverview(){ $("#toSurvey").onclick=()=>navigate("survey"); }
+
+/* ============================================================================
+   SCREEN: PRE-SERIES SURVEY (NEEDS ASSESSMENT)
+   ========================================================================== */
+function scrSurvey(){
+  const rec=state.student;
+  const n=rec.needs||{};
+  const roleOpts=ROLES.map(r=>`<label class="opt">
+      <input type="radio" name="s_role" value="${esc(r)}" ${ (n.role||rec.role)===r?"checked":""}/>
+      <span class="tick"></span><span class="lbl">${esc(r)}</span></label>`).join("");
+  const expOpts=EXPOSURE.map(e=>`<label class="opt">
+      <input type="radio" name="exposure" value="${esc(e)}" ${n.exposure===e?"checked":""}/>
+      <span class="tick"></span><span class="lbl">${esc(e)}</span></label>`).join("");
+  const confBlocks=NEEDS_TOPICS.map(t=>`
+    <div style="margin-top:16px">
+      <div style="font-weight:600;font-size:14px;margin-bottom:2px">${esc(t.label)}</div>
+      <div class="scale conf">${[1,2,3,4,5].map(v=>`
+        <label><input type="radio" name="conf_${t.key}" value="${v}" ${n.conf&&n.conf[t.key]==v?"checked":""}/><span class="seg">${v}</span></label>`).join("")}</div>
+    </div>`).join("");
+  const prioOpts=PRIORITIES.map(p=>`<label class="opt checkbox">
+      <input type="checkbox" name="priority" value="${esc(p)}" ${n.priorities&&n.priorities.includes(p)?"checked":""}/>
+      <span class="tick"></span><span class="lbl">${esc(p)}</span></label>`).join("");
+
+  return `<div class="card">
+    <span class="eyebrow">📝 Needs assessment · pre-series</span>
+    <h1>Before we begin</h1>
+    <p class="lede">Anonymous — used to set priorities and a baseline we can measure against at the end. Please complete before Session 1.</p>
+    <form id="surveyForm">
+      <div class="block"><h3><span class="numpill">1</span>Your role</h3>
+        <div class="opts">${roleOpts}</div>
+        <div class="inline-other ${(n.role||rec.role)==="Other"?"show":""}" id="sOtherWrap">
+          <input type="text" id="s_roleOther" placeholder="Please specify" value="${esc(n.roleOther||rec.roleOther||"")}"/>
+        </div>
+      </div>
+
+      <div class="block"><h3><span class="numpill">2</span>Orthopaedic exposure so far</h3>
+        <div class="opts">${expOpts}</div>
+      </div>
+
+      <div class="block"><h3><span class="numpill">3</span>How confident are you right now?</h3>
+        <p class="hint" style="margin-top:0">1 = not at all confident · 3 = somewhat · 5 = very confident</p>
+        ${confBlocks}
+      </div>
+
+      <div class="block"><h3><span class="numpill">4</span>Priorities</h3>
+        <p class="hint" style="margin-top:0">Tick the topics you most want covered (up to two).</p>
+        <div class="opts">${prioOpts}</div>
+        <div class="inline-other ${n.priorities&&n.priorities.includes("Other")?"show":""}" id="prioOtherWrap">
+          <input type="text" id="prio_other" placeholder="Other priority (optional)" value="${esc(n.priorityOther||"")}"/>
+        </div>
+      </div>
+
+      <div class="block"><h3><span class="numpill">5</span>One more thing</h3>
+        <label class="fld">What would make this teaching series most useful for you?</label>
+        <textarea id="useful" placeholder="Optional — anything you’d like us to focus on…">${esc(n.useful||"")}</textarea>
+      </div>
+
+      <div class="btn-row" style="margin-top:24px">
+        <button type="submit" class="btn btn-primary btn-block">Submit &amp; unlock the lessons →</button>
+      </div>
+      <p class="hint" style="text-align:center">Thank you — your answers go anonymously to the programme lead.</p>
+    </form>
+  </div>`;
+}
+
+function bindSurvey(){
+  const form=$("#surveyForm");
+  // role other toggle
+  const sOtherWrap=$("#sOtherWrap");
+  $$('input[name=s_role]').forEach(r=>r.onchange=()=>sOtherWrap.classList.toggle("show",r.value==="Other"&&r.checked));
+  // priority: max 2 + other toggle
+  const prioBoxes=$$('input[name=priority]');
+  const prioOtherWrap=$("#prioOtherWrap");
+  function prioRefresh(){
+    const checked=prioBoxes.filter(b=>b.checked);
+    prioBoxes.forEach(b=>{ b.closest(".opt").classList.toggle("disabled", !b.checked && checked.length>=2); });
+    const otherChecked=prioBoxes.some(b=>b.checked&&b.value==="Other");
+    prioOtherWrap.classList.toggle("show",otherChecked);
+  }
+  prioBoxes.forEach(b=>b.onchange=prioRefresh); prioRefresh();
+
+  form.onsubmit=async(e)=>{
+    e.preventDefault();
+    const role=$('input[name=s_role]:checked');
+    if(!role){ toast("Please select your role"); return; }
+    const exposure=$('input[name=exposure]:checked');
+    if(!exposure){ toast("Please select your orthopaedic exposure"); return; }
+    const conf={};
+    for(const t of NEEDS_TOPICS){
+      const v=$(`input[name=conf_${t.key}]:checked`);
+      if(!v){ toast("Please rate your confidence in all four areas"); return; }
+      conf[t.key]=+v.value;
+    }
+    const priorities=prioBoxes.filter(b=>b.checked).map(b=>b.value);
+    state.student.role=role.value;
+    state.student.roleOther = role.value==="Other" ? ($("#s_roleOther").value.trim()) : "";
+    state.student.needs={
+      role:role.value,
+      roleOther: role.value==="Other" ? $("#s_roleOther").value.trim() : "",
+      exposure:exposure.value,
+      conf,
+      priorities,
+      priorityOther: priorities.includes("Other") ? $("#prio_other").value.trim() : "",
+      useful:$("#useful").value.trim(),
+      submittedAt:Date.now()
+    };
+    await Store.saveStudent(state.student);
+    toast("Needs assessment submitted ✓");
+    navigate("map");
+  };
+}
+
+/* ============================================================================
+   SCREEN: GAME MAP
+   ========================================================================== */
+function scrMap(){
+  const done=completedCount();
+  const pct=Math.round(done/LESSONS.length*100);
+  const allDone=done===LESSONS.length;
+  const nodes=LESSONS.map(l=>{
+    const complete=isComplete(l.n), unlocked=isUnlocked(l.n), active=isActive(l.n);
+    const cls = complete?"done":(unlocked?"unlocked":"locked");
+    let stateLbl, badge="";
+    if(complete){ stateLbl=`<span class="state">⭐ Completed</span>`; badge=`<span class="badge">✅</span>`; }
+    else if(active){ stateLbl=`<span class="state">⏱️ In progress — tap to resume</span>`; }
+    else if(unlocked){ stateLbl=`<span class="state">▶ Tap to start</span>`; }
+    else { stateLbl=`<span class="state">🔒 Locked</span>`; badge=`<span class="badge">🔒</span>`; }
+    return `<div class="node ${cls}" data-lvl="${l.n}">
+      <div class="orb-wrap">
+        <div class="orb"><span class="lvlnum">${l.n}</span>${unlocked||complete?l.icon:"🔒"}${badge}</div>
+      </div>
+      <div class="info-c">
+        <div class="lvl-k">Level ${l.n}</div>
+        <h3>${esc(l.short)}</h3>
+        <p>${esc(unlocked||complete?l.focus:"Complete the previous level to unlock.")}</p>
+        ${stateLbl}
+      </div>
+    </div>`;
+  }).join("");
+
+  return `<div class="map-head">
+      <h1>Your learning quest</h1>
+      <p>Four levels. Clear one to unlock the next.</p>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <div class="progress-lbl">${done} / ${LESSONS.length} lessons complete</div>
+      </div>
+    </div>
+    <div class="map">${nodes}</div>
+    ${allDone?`<div class="card" style="margin-top:24px;text-align:center">
+        <div style="font-size:46px">🏆</div>
+        <h2>Series complete!</h2>
+        <p class="muted">You’ve finished all four lessons. Thank you for taking part.</p>
+        <button class="btn btn-primary" data-act="to-done">See your summary →</button>
+      </div>`:""}`;
+}
+
+function bindMap(){
+  $$(".node").forEach(node=>{
+    const n=+node.dataset.lvl;
+    node.onclick=()=>{
+      if(!isUnlocked(n)){ node.classList.remove("shake"); void node.offsetWidth; node.classList.add("shake"); toast("🔒 Finish the level before to unlock this"); return; }
+      if(isActive(n)){ navigate("lessonActive",{lesson:n}); return; }
+      if(isComplete(n)){ // allow re-view of feedback summary? open intro read-only
+        navigate("lessonIntro",{lesson:n}); return; }
+      navigate("lessonIntro",{lesson:n});
+    };
+  });
+  $$('[data-act="to-done"]').forEach(b=>b.onclick=()=>navigate("done"));
+}
+
+/* ============================================================================
+   SCREEN: LESSON INTRO (overview + objectives + before-confidence)
+   ========================================================================== */
+function scrLessonIntro(){
+  const n=state.currentLesson; const l=LESSONS[n-1];
+  const already=isComplete(n);
+  const rec=lessonRec(n);
+  const objs=l.objectives.map(o=>`<li><span class="ic">✔</span><span>${esc(o)}</span></li>`).join("");
+  const confChosen = rec && rec.beforeConfidence ? rec.beforeConfidence : null;
+  return `<div class="card">
+    <span class="eyebrow">${l.icon} Level ${n} of 4</span>
+    <h1>${esc(l.title)}</h1>
+    <p class="lede">${esc(l.overview)}</p>
+
+    <hr class="sep"/>
+    <h3>Learning objectives</h3>
+    <p class="muted" style="margin-top:-4px;font-size:14px">By the end of this session you should be able to:</p>
+    <ul class="obj objx">${objs}</ul>
+
+    ${already?`
+      <hr class="sep"/>
+      <div class="info"><h4>⭐ You’ve completed this lesson</h4><p style="margin:0">Your before-session confidence was <b>${rec.beforeConfidence}/5</b>${rec.feedback?` and after-session <b>${rec.feedback.after}/5</b>`:""}. You can re-read the objectives any time.</p></div>
+      <div class="btn-row" style="margin-top:18px"><button class="btn btn-ghost btn-block" data-act="back-map">← Back to the map</button></div>
+    `:`
+      <hr class="sep"/>
+      <h3>Before we start — how confident are you?</h3>
+      <p class="hint" style="margin-top:-2px">Your confidence in <b>${esc(l.confLabel)}</b> right now.</p>
+      <div class="scale conf" id="beforeScale">
+        ${[1,2,3,4,5].map(v=>`<label><input type="radio" name="before" value="${v}" ${confChosen==v?"checked":""}/><span class="seg">${v}</span></label>`).join("")}
+      </div>
+      <div class="scale-ends"><span>1 · not at all</span><span>3 · somewhat</span><span>5 · very confident</span></div>
+      <div class="btn-row" style="margin-top:22px">
+        <button class="btn btn-ghost" data-act="back-map">← Map</button>
+        <button class="btn btn-primary" style="flex:1" id="beginBtn" disabled>Begin lesson →</button>
+      </div>
+    `}
+  </div>`;
+}
+function bindLessonIntro(){
+  $$('[data-act="back-map"]').forEach(b=>b.onclick=()=>navigate("map"));
+  const beginBtn=$("#beginBtn");
+  if(beginBtn){
+    $$('input[name=before]').forEach(r=>r.onchange=()=>{ beginBtn.disabled=false; });
+    beginBtn.onclick=async()=>{
+      const v=$('input[name=before]:checked'); if(!v){ toast("Please choose your confidence"); return; }
+      const n=state.currentLesson;
+      state.student.lessons[n]=Object.assign({}, state.student.lessons[n]||{}, {
+        beforeConfidence:+v.value, startedAt:Date.now(), endedAt:null
+      });
+      await Store.saveStudent(state.student);
+      navigate("lessonActive",{lesson:n});
+    };
+  }
+}
+
+/* ============================================================================
+   SCREEN: LESSON ACTIVE (thank you + stopwatch)
+   ========================================================================== */
+function fmtDur(ms){
+  const s=Math.floor(ms/1000); const hh=Math.floor(s/3600), mm=Math.floor((s%3600)/60), ss=s%60;
+  const p=(x)=>String(x).padStart(2,"0");
+  return (hh>0?p(hh)+":":"")+p(mm)+":"+p(ss);
+}
+function scrLessonActive(){
+  const n=state.currentLesson; const l=LESSONS[n-1];
+  const rec=lessonRec(n);
+  const elapsed = rec&&rec.startedAt ? Date.now()-rec.startedAt : 0;
+  return `<div class="card">
+    <div class="thanks-hero">
+      <div class="big">🙏</div>
+      <h1>Thank you!</h1>
+      <p class="lede" style="margin-bottom:0">Your before-session confidence (<b>${rec?rec.beforeConfidence:"–"}/5</b>) has been recorded. Enjoy <b>${esc(l.title)}</b>.</p>
+    </div>
+    <div class="sw-card" style="margin-top:20px">
+      <div class="sw-live"><span class="blink"></span> Lesson timer running</div>
+      <div class="stopwatch" id="sw">${fmtDur(elapsed)}</div>
+      <p class="muted" style="margin:0;font-size:13px">This times the session for the programme report. Press “End lesson” when the session finishes.</p>
+    </div>
+    <div class="btn-row" style="margin-top:20px">
+      <button class="btn btn-accent btn-block" id="endBtn">⏹ End lesson &amp; give feedback</button>
+    </div>
+  </div>`;
+}
+function bindLessonActive(){
+  const n=state.currentLesson; const rec=lessonRec(n);
+  const swEl=$("#sw");
+  if(swInterval) clearInterval(swInterval);
+  swInterval=setInterval(()=>{ if(swEl&&rec) swEl.textContent=fmtDur(Date.now()-rec.startedAt); },250);
+  $("#endBtn").onclick=async()=>{
+    const now=Date.now();
+    state.student.lessons[n].endedAt=now;
+    state.student.lessons[n].durationMs=now-rec.startedAt;
+    await Store.saveStudent(state.student);
+    if(swInterval){ clearInterval(swInterval); swInterval=null; }
+    navigate("feedback",{lesson:n});
+  };
+}
+
+/* ============================================================================
+   SCREEN: FEEDBACK FORM (no before-confidence)
+   ========================================================================== */
+function scrFeedback(){
+  const n=state.currentLesson; const l=LESSONS[n-1]; const rec=lessonRec(n);
+  const dur = rec&&rec.durationMs ? fmtDur(rec.durationMs) : "—";
+  const stmts=FEEDBACK_Q.map((q,i)=>`
+    <div class="statement">
+      <div class="q">${esc(q)}</div>
+      <div class="scale">${[1,2,3,4,5].map(v=>`<label><input type="radio" name="q${i+1}" value="${v}"/><span class="seg">${v}</span></label>`).join("")}</div>
+    </div>`).join("");
+  return `<div class="card">
+    <span class="eyebrow">📋 Feedback &amp; evaluation</span>
+    <h1>How was Level ${n}?</h1>
+    <p class="lede">${esc(l.title)}</p>
+    <p class="hint" style="margin-top:-6px">Anonymous · used to improve future sessions · session timed at <b>${dur}</b></p>
+    <form id="fbForm">
+      <label class="fld">Date of session</label>
+      <input type="date" id="fbDate" value="${todayISO()}"/>
+      <p class="hint" style="margin-top:10px"><b>Rate the following</b> — 1 = strongly disagree · 3 = neutral · 5 = strongly agree</p>
+      ${stmts}
+      <div class="statement">
+        <div class="q">Confidence in this topic <b>after</b> the session</div>
+        <p class="hint" style="margin-top:0">Your before-session rating (${rec?rec.beforeConfidence:"–"}/5) is already saved.</p>
+        <div class="scale conf">${[1,2,3,4,5].map(v=>`<label><input type="radio" name="after" value="${v}"/><span class="seg">${v}</span></label>`).join("")}</div>
+        <div class="scale-ends"><span>1 · not at all</span><span>5 · very confident</span></div>
+      </div>
+      <label class="fld">What was the most useful part of this session?</label>
+      <textarea id="mostUseful" placeholder="Optional"></textarea>
+      <label class="fld">What could be improved?</label>
+      <textarea id="toImprove" placeholder="Optional"></textarea>
+      <label class="fld">Topics you’d like covered in future sessions</label>
+      <textarea id="futureTopics" placeholder="Optional"></textarea>
+      <div class="btn-row" style="margin-top:22px">
+        <button type="submit" class="btn btn-primary btn-block">Submit feedback →</button>
+      </div>
+      <p class="hint" style="text-align:center">Thank you.</p>
+    </form>
+  </div>`;
+}
+function bindFeedback(){
+  $("#fbForm").onsubmit=async(e)=>{
+    e.preventDefault();
+    const q=[];
+    for(let i=1;i<=6;i++){ const v=$(`input[name=q${i}]:checked`); if(!v){ toast("Please answer all six statements"); return; } q.push(+v.value); }
+    const after=$('input[name=after]:checked'); if(!after){ toast("Please rate your after-session confidence"); return; }
+    const n=state.currentLesson;
+    state.student.lessons[n].feedback={
+      date:$("#fbDate").value||todayISO(),
+      q, after:+after.value,
+      mostUseful:$("#mostUseful").value.trim(),
+      toImprove:$("#toImprove").value.trim(),
+      futureTopics:$("#futureTopics").value.trim(),
+      submittedAt:Date.now()
+    };
+    await Store.saveStudent(state.student);
+    toast("Feedback submitted — level cleared! ⭐");
+    if(completedCount()===LESSONS.length) navigate("done");
+    else navigate("map");
+  };
+}
+
+/* ============================================================================
+   SCREEN: DONE
+   ========================================================================== */
+function scrDone(){
+  // confidence shift summary across lessons
+  const rows=LESSONS.map(l=>{
+    const r=lessonRec(l.n);
+    if(!r||!r.feedback) return "";
+    const shift=r.feedback.after-r.beforeConfidence;
+    return `<tr><td style="text-align:left">${esc(l.short)}</td><td>${r.beforeConfidence}</td><td>${r.feedback.after}</td><td class="${shift>0?'pos':''}">${shift>0?'+':''}${shift}</td></tr>`;
+  }).join("");
+  return `<div class="card" style="text-align:center">
+    <div style="font-size:60px">🏆</div>
+    <span class="eyebrow" style="margin-top:8px">Series complete</span>
+    <h1>Brilliant — you’ve finished all four lessons</h1>
+    <p class="lede">Thank you for taking part in <b>${esc(PROGRAMME.title)}</b>. Your anonymous feedback helps shape the series for the next cohort.</p>
+  </div>
+  <div class="card">
+    <h3>Your confidence journey</h3>
+    <div class="scroll-x"><table class="dtable"><thead><tr><th>Lesson</th><th>Before</th><th>After</th><th>Shift</th></tr></thead><tbody>${rows||`<tr><td colspan="4" class="empty">No completed lessons yet.</td></tr>`}</tbody></table></div>
+    <div class="btn-row" style="margin-top:18px"><button class="btn btn-ghost btn-block" data-act="back-map">← Back to the map</button></div>
+  </div>`;
+}
+function bindDone(){ $$('[data-act="back-map"]').forEach(b=>b.onclick=()=>navigate("map")); }
+
+/* ============================================================================
+   SCREEN: LEAD GATE
+   ========================================================================== */
+function scrLeadGate(){
+  return `<div class="card">
+    <span class="eyebrow">🛠️ Programme lead</span>
+    <h1>Master access</h1>
+    <p class="lede">Enter the master sync code to open the live end-of-series report and analytics. ${cloudEnabled?"":"<b>Offline build:</b> you’ll see data collected on this device."}</p>
+    <label class="fld">Master sync code</label>
+    <input type="text" id="masterCode" inputmode="numeric" placeholder="16-digit master code" autocomplete="off"/>
+    <div class="btn-row" style="margin-top:18px">
+      <button class="btn btn-ghost" data-act="home">← Back</button>
+      <button class="btn btn-primary" style="flex:1" id="enterMaster">Open dashboard →</button>
+    </div>
+  </div>`;
+}
+function bindLeadGate(){
+  $$('[data-act="home"]').forEach(b=>b.onclick=()=>navigate(state.student?"map":"landing"));
+  const go=async()=>{
+    const code=normCode($("#masterCode").value);
+    if(code!==MASTER_CODE){ toast("Incorrect master code"); return; }
+    navigate("master");
+  };
+  $("#enterMaster").onclick=go;
+  $("#masterCode").addEventListener("keydown",e=>{ if(e.key==="Enter") go(); });
+}
+
+/* ============================================================================
+   MASTER: data computation
+   ========================================================================== */
+function buildRows(students){
+  const rows=[];
+  (students||[]).forEach(s=>{
+    if(!s||!s.lessons) return;
+    LESSONS.forEach(l=>{
+      const r=s.lessons[l.n];
+      if(r&&r.feedback){
+        const fb=r.feedback;
+        rows.push({
+          session:l.n, date:fb.date||"", role:roleLabel(s),
+          q:fb.q, before:r.beforeConfidence, after:fb.after,
+          shift:(fb.after!=null&&r.beforeConfidence!=null)?fb.after-r.beforeConfidence:null,
+          mostUseful:fb.mostUseful, toImprove:fb.toImprove, futureTopics:fb.futureTopics,
+          durationMs:r.durationMs||null, syncCode:s.syncCode
+        });
+      }
+    });
+  });
+  return rows;
+}
+const mean=(arr)=>{ const v=arr.filter(x=>x!=null&&!isNaN(x)); return v.length?v.reduce((a,b)=>a+b,0)/v.length:null; };
+const f1=(x)=> x==null?"—":(Math.round(x*10)/10).toFixed(1);
+const f1c=(x)=> x==null?"":(Math.round(x*10)/10).toFixed(1);  // CSV-safe (blank, not dash)
+
+function stats(rows,session){
+  const r = session==="all"?rows:rows.filter(x=>x.session===session);
+  const n=r.length;
+  const qMeans=[0,1,2,3,4,5].map(i=>mean(r.map(x=>x.q?x.q[i]:null)));
+  const meanRating=mean(qMeans.filter(x=>x!=null));
+  const cb=mean(r.map(x=>x.before)), ca=mean(r.map(x=>x.after));
+  const shift=(cb!=null&&ca!=null)?ca-cb:null;
+  const recCount=r.filter(x=>x.q&&x.q[5]>=4).length;
+  const recPct=n?Math.round(recCount/n*100):null;
+  return {n,qMeans,meanRating,cb,ca,shift,recPct};
+}
+
+/* ============================================================================
+   SCREEN: MASTER
+   ========================================================================== */
+function scrMaster(){
+  return `<div class="master-tabs no-print">
+      <button data-tab="report" class="${state.masterTab==='report'?'active':''}">📄 End-of-series report</button>
+      <button data-tab="analytics" class="${state.masterTab==='analytics'?'active':''}">📊 Analytics</button>
+    </div>
+    <div id="masterBody"></div>`;
+}
+
+function bindMaster(){
+  $$('[data-tab]').forEach(b=>b.onclick=()=>{
+    state.masterTab=b.dataset.tab;
+    $$('[data-tab]').forEach(x=>x.classList.toggle("active",x.dataset.tab===state.masterTab));
+    refreshMasterBody();
+  });
+  afterMasterRender();
+}
+
+async function afterMasterRender(){
+  // load master meta once
+  if(!state._metaLoaded){ state.masterMeta=await Store.getMaster()||{}; state._metaLoaded=true; }
+  // subscribe to students for live autofill
+  if(!state.masterUnsub){
+    state.masterUnsub=Store.subscribeStudents(students=>{
+      state.rows=buildRows(students);
+      state.studentsCount=(students||[]).filter(s=>s&&s.needs).length;
+      refreshMasterBody();
+    });
+  } else {
+    refreshMasterBody();
+  }
+}
+
+function refreshMasterBody(){
+  const host=$("#masterBody"); if(!host) return;
+  if(state.masterTab==="analytics"){
+    const key="A|"+JSON.stringify(state.rows);
+    if(host.dataset.key===key) return;          // unchanged → no flicker
+    host.dataset.key=key;
+    host.innerHTML=masterAnalytics(); bindAnalytics(); return;
+  }
+  // report tab: build the shell once, then only refresh auto regions so the
+  // lead's in-progress typing in the editable fields is never clobbered.
+  if(!host.querySelector("#reportRoot")){
+    host.dataset.key="";
+    host.innerHTML=masterReport(); bindReport();
+  } else {
+    updateReportAuto();
+  }
+}
+
+/* ---------- MASTER: REPORT — auto-fill helpers ---------- */
+function themesHTML(field){
+  const items=state.rows.filter(r=>r[field]&&r[field].trim()).map(r=>`<li><span class="tag">S${r.session}</span>${esc(r[field])}</li>`);
+  return items.length?`<ul class="theme-list">${items.join("")}</ul>`:`<div class="empty">No comments yet.</div>`;
+}
+function reportResultsHTML(){
+  const ratingRow=(label,sess)=>{ const s=stats(state.rows,sess); return `<tr class="${sess==='all'?'overall':''}">
+      <td>${label}</td><td>${s.n||0}</td><td>${f1(s.meanRating)}</td><td>${f1(s.cb)}</td><td>${f1(s.ca)}</td>
+      <td class="${s.shift>0?'pos':''}">${s.shift==null?'—':(s.shift>0?'+':'')+f1(s.shift)}</td></tr>`; };
+  return LESSONS.map(l=>ratingRow(`${l.n} – ${l.short}`,l.n)).join("")+ratingRow("Overall","all");
+}
+function reportKpisHTML(){
+  const o=stats(state.rows,"all");
+  return `<div class="kpi"><div class="v">${f1(o.meanRating)}<small>/5</small></div><div class="l">Overall mean session rating across ${o.n} form${o.n===1?'':'s'}</div></div>
+    <div class="kpi"><div class="v">${f1(o.cb)} → ${f1(o.ca)}</div><div class="l">Mean confidence (shift ${o.shift==null?'—':(o.shift>0?'+':'')+f1(o.shift)})</div></div>
+    <div class="kpi"><div class="v">${o.recPct==null?'—':o.recPct+'%'}</div><div class="l">Would recommend to a colleague</div></div>`;
+}
+function reportAttendeesHTML(){ return `${state.studentsCount||0} (registered) · ${new Set(state.rows.map(r=>r.syncCode)).size} fed back`; }
+function reportDateRange(){ const d=(state.masterMeta||{}).dates||{}; const f=LESSONS.map(l=>d[l.n]).filter(Boolean).sort(); return f.length?`${f[0]} – ${f[f.length-1]}`:"[set session dates below]"; }
+
+/* ---------- MASTER: CHARTS (inline SVG — reproduces & improves the Excel charts) ---------- */
+// Chart 1 (Excel: "Confidence before vs after, by session") — grouped columns,
+// improved with a fixed 0–5 axis, value labels, an explicit gain figure, and an Overall group.
+function svgConfidenceBySession(){
+  const cats=[{k:1,l:"S1"},{k:2,l:"S2"},{k:3,l:"S3"},{k:4,l:"S4"},{k:"all",l:"Overall"}];
+  // generous top band (plotTop=78) so the value label + gain figure always sit
+  // ABOVE a full-height (5.0) bar without clipping or colliding with the legend.
+  const W=720,H=326,plotTop=78,base=276,plotL=56,plotR=704;
+  const plotW=plotR-plotL, unit=(base-plotTop)/5, groupW=plotW/cats.length, barW=Math.min(38,groupW/2-9);
+  const yOf=v=>base-v*unit;
+  let g="";
+  // legend — top-left, in the reserved band, clear of the bars/gain labels
+  g+=`<rect x="${plotL}" y="8" width="12" height="12" rx="3" fill="#94a3b8"/><text x="${plotL+18}" y="18" font-size="11.5" fill="#41566f">Before</text>`;
+  g+=`<rect x="${plotL+78}" y="8" width="12" height="12" rx="3" fill="#0e7490"/><text x="${plotL+96}" y="18" font-size="11.5" fill="#41566f">After</text>`;
+  for(let t=0;t<=5;t++){ const y=base-t*unit; g+=`<line x1="${plotL}" y1="${y}" x2="${plotR}" y2="${y}" stroke="#eef2f7"/><text x="${plotL-8}" y="${y+4}" text-anchor="end" font-size="11" fill="#7488a0">${t}</text>`; }
+  g+=`<line x1="${plotL}" y1="${base}" x2="${plotR}" y2="${base}" stroke="#cbd5e1"/>`;
+  cats.forEach((c,i)=>{
+    const s=stats(state.rows,c.k), cx=plotL+groupW*i+groupW/2, bx=cx-barW-3, ax=cx+3;
+    const bar=(x,v,fill)=> v==null
+      ? `<text x="${x+barW/2}" y="${base-6}" text-anchor="middle" font-size="11" fill="#b6c2d2">–</text>`
+      : `<rect x="${x}" y="${yOf(v)}" width="${barW}" height="${base-yOf(v)}" rx="5" fill="${fill}"/><text x="${x+barW/2}" y="${yOf(v)-6}" text-anchor="middle" font-size="11" font-weight="700" fill="#41566f">${f1(v)}</text>`;
+    g+=bar(bx,s.cb,"#94a3b8")+bar(ax,s.ca,"#0e7490");
+    if(s.cb!=null&&s.ca!=null){ const sh=s.ca-s.cb, yb=Math.max(Math.min(yOf(s.cb),yOf(s.ca))-22,30), fill=sh>0?'#16a34a':(sh<0?'#dc2626':'#7488a0'); g+=`<text x="${cx}" y="${yb}" text-anchor="middle" font-size="11.5" font-weight="800" fill="${fill}">${(sh>0?'+':'')+f1(sh)}</text>`; }
+    g+=`<text x="${cx}" y="${base+18}" text-anchor="middle" font-size="12" font-weight="600" fill="#41566f">${c.l}</text>`;
+  });
+  g+=`<text transform="translate(16 ${(plotTop+base)/2}) rotate(-90)" text-anchor="middle" font-size="11" fill="#7488a0">Mean confidence (1–5)</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block" font-family="Inter,system-ui,sans-serif" role="img" aria-label="Confidence before vs after by session">${g}</svg>`;
+}
+// Chart 2 (Excel: "Overall mean rating per question") — horizontal bars,
+// improved with score colour-banding, value labels and an overall-mean reference line.
+function svgRatingByQuestion(){
+  const labels=["Q1 Relevant","Q2 Pitched","Q3 Clear","Q4 Objectives","Q5 Confidence","Q6 Recommend"];
+  const o=stats(state.rows,"all"), vals=o.qMeans;
+  const W=720,rowH=33,top=12,gx=170,plotW=506,step=plotW/5,plotH=labels.length*rowH,H=top+plotH+30;
+  const col=v=> v==null?"#cbd5e1": v>=4?"#16a34a": v>=3?"#f59e0b":"#dc2626";
+  let g="";
+  for(let t=0;t<=5;t++){ const x=gx+t*step; g+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${top+plotH}" stroke="#eef2f7"/><text x="${x}" y="${top+plotH+18}" text-anchor="middle" font-size="11" fill="#7488a0">${t}</text>`; }
+  labels.forEach((lb,i)=>{
+    const v=vals[i], y=top+i*rowH+6, bh=20, w=v==null?0:v*step;
+    g+=`<text x="${gx-10}" y="${y+14}" text-anchor="end" font-size="12" fill="#41566f" font-weight="600">${lb}</text>`;
+    g+=`<rect x="${gx}" y="${y}" width="${plotW}" height="${bh}" rx="5" fill="#f4f7fb"/>`;
+    if(v!=null) g+=`<rect x="${gx}" y="${y}" width="${w}" height="${bh}" rx="5" fill="${col(v)}"/>`;
+    g+=`<text x="${gx+(v==null?6:Math.min(w,plotW-2)+8)}" y="${y+14}" font-size="12" font-weight="700" fill="${v==null?'#9fb0c4':'#0f1f33'}">${v==null?'–':f1(v)}</text>`;
+  });
+  if(o.meanRating!=null){ const x=gx+o.meanRating*step; g+=`<line x1="${x}" y1="${top-3}" x2="${x}" y2="${top+plotH+2}" stroke="#0e7490" stroke-dasharray="4 3" stroke-width="1.5"/><text x="${x}" y="${top-5}" text-anchor="middle" font-size="10" font-weight="700" fill="#0e7490">mean ${f1(o.meanRating)}</text>`; }
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block" font-family="Inter,system-ui,sans-serif" role="img" aria-label="Overall mean rating per question">${g}</svg>`;
+}
+function chartsBlockHTML(){
+  const empty=state.rows.length===0;
+  return `<h3 style="margin:2px 0 2px;font-size:15px">Confidence before vs after, by session</h3>
+    <p class="muted" style="font-size:12.5px;margin:0 0 8px">Mean self-rated confidence (1–5). The green figure above each pair is the gain.</p>
+    ${svgConfidenceBySession()}
+    <hr class="sep"/>
+    <h3 style="margin:2px 0 2px;font-size:15px">Overall mean rating per question</h3>
+    <p class="muted" style="font-size:12.5px;margin:0 0 8px">Mean agreement (1–5) across all forms · dashed line = overall mean · green ≥4, amber 3–4, red &lt;3.</p>
+    ${svgRatingByQuestion()}
+    ${empty?`<p class="empty" style="margin-top:10px">Charts populate automatically as feedback comes in.</p>`:""}`;
+}
+
+function updateReportAuto(){
+  const set=(id,html)=>{ const el=document.getElementById(id); if(el) el.innerHTML=html; };
+  set("autoResults",reportResultsHTML());
+  set("autoKpis",reportKpisHTML());
+  set("autoValued",themesHTML("mostUseful"));
+  set("autoImprove",themesHTML("toImprove"));
+  set("autoTopics",themesHTML("futureTopics"));
+  set("autoAttendees",reportAttendeesHTML());
+  set("autoDateRange",reportDateRange());
+  set("autoReportCharts",chartsBlockHTML());
+}
+
+function masterReport(){
+  const m=state.masterMeta;
+  const dates=m.dates||{};
+  const fld=(id,val,ph,big)=> big
+    ? `<textarea data-meta="${id}" placeholder="${esc(ph)}">${esc(val||"")}</textarea>`
+    : `<input type="text" data-meta="${id}" value="${esc(val||"")}" placeholder="${esc(ph)}"/>`;
+
+  return `<div class="card report-doc" id="reportRoot">
+    ${cloudEnabled?"":`<div class="sync-note no-print">ℹ️ <div><b>Offline build.</b> This dashboard shows feedback stored on <b>this device/browser</b> only. To pull in students’ submissions from their own phones in real time, add your Firebase config (see SETUP.md).</div></div>`}
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-top:${cloudEnabled?0:12}px">
+      <div>
+        <span class="eyebrow">End-of-series report</span>
+        <h1 style="margin-bottom:2px">Orthopaedics for the Foundation Doctor</h1>
+        <p class="muted" style="margin:0">A summary of delivery, evaluation and impact for the teaching portfolio.</p>
+      </div>
+      <button class="btn btn-ghost btn-sm no-print" data-act="print">🖨 Print / PDF</button>
+    </div>
+
+    <div class="meta-grid" style="margin-top:18px">
+      <div><b>Programme lead</b>${esc(PROGRAMME.lead)} · ${esc(PROGRAMME.hospital)}</div>
+      <div><b>Supervising consultant</b>${fld("consultant",m.consultant,"[Name], Consultant T&O Surgeon")}</div>
+      <div><b>Audience</b>${esc(PROGRAMME.audience)}</div>
+      <div><b>Dates delivered</b><span id="autoDateRange">${esc(reportDateRange())}</span></div>
+      <div><b>Sessions</b>4</div>
+      <div><b>Total unique attendees</b><span id="autoAttendees">${reportAttendeesHTML()}</span></div>
+    </div>
+
+    <h2>Overview</h2>
+    ${fld("overview",m.overview,"1–2 sentences: what was delivered, the format, and how feedback was collected each session.",true)}
+
+    <h2>Results at a glance</h2>
+    <p class="muted" style="font-size:13px;margin-top:-6px">Auto-filled from the feedback tracker. Ratings &amp; confidence 1–5.</p>
+    <div class="scroll-x"><table class="dtable">
+      <thead><tr><th>Session</th><th>Attendees (n)</th><th>Mean rating (Q1–Q6)</th><th>Conf. before</th><th>Conf. after</th><th>Shift</th></tr></thead>
+      <tbody id="autoResults">${reportResultsHTML()}</tbody>
+    </table></div>
+
+    <h2>Key outcomes</h2>
+    <div class="kpis" id="autoKpis">${reportKpisHTML()}</div>
+
+    <h2>Visual summary</h2>
+    <div id="autoReportCharts">${chartsBlockHTML()}</div>
+
+    <h2>Themes from free-text feedback</h2>
+    <h4 style="margin:14px 0 6px;font-size:13px">Most valued <span class="muted">(auto — verbatim)</span></h4>
+    <div id="autoValued">${themesHTML("mostUseful")}</div>
+    <label class="fld">Lead summary — most valued</label>${fld("themesValued",m.themesValued,"Summarise the recurring positives…",true)}
+    <h4 style="margin:18px 0 6px;font-size:13px">Areas to improve <span class="muted">(auto — verbatim)</span></h4>
+    <div id="autoImprove">${themesHTML("toImprove")}</div>
+    <label class="fld">Lead summary — areas to improve</label>${fld("themesImprove",m.themesImprove,"Summarise the suggestions…",true)}
+    <h4 style="margin:18px 0 6px;font-size:13px">Requested future topics <span class="muted">(auto — verbatim)</span></h4>
+    <div id="autoTopics">${themesHTML("futureTopics")}</div>
+    <label class="fld">Lead summary — requested topics</label>${fld("themesTopics",m.themesTopics,"Summarise requested topics…",true)}
+
+    <h2>Closing the loop &amp; next steps</h2>
+    <label class="fld">Changes made between sessions in response to feedback</label>
+    ${fld("changesMade",m.changesMade,"…",true)}
+    <label class="fld">Planned next steps (e.g. repeat for next cohort, develop into a poster / QI write-up)</label>
+    ${fld("nextSteps",m.nextSteps,"…",true)}
+
+    <h2>Session dates &amp; sign-off</h2>
+    <p class="muted" style="font-size:13px;margin-top:-6px">Enter each session’s date as you deliver it — these set the “dates delivered” range above.</p>
+    <div class="lead-grid">
+      ${LESSONS.map(l=>`<div><label class="fld" style="margin-top:8px">Session ${l.n} — ${esc(l.short)}</label><input type="date" data-metadate="${l.n}" value="${esc(dates[l.n]||"")}"/></div>`).join("")}
+    </div>
+    <div class="lead-grid" style="margin-top:8px">
+      <div><label class="fld">Lead</label>${fld("leadName",m.leadName!=null?m.leadName:PROGRAMME.lead,"")}</div>
+      <div><label class="fld">Date</label><input type="date" data-meta="leadDate" value="${esc(m.leadDate||"")}"/></div>
+      <div><label class="fld">Verified by supervisor</label>${fld("verifiedBy",m.verifiedBy,"")}</div>
+      <div><label class="fld">Date</label><input type="date" data-meta="verifiedDate" value="${esc(m.verifiedDate||"")}"/></div>
+    </div>
+
+    <div class="btn-row no-print" style="margin-top:22px">
+      <button class="btn btn-primary" id="saveReport">💾 Save report</button>
+      <span class="save-pill" id="savePill">Saved ✓</span>
+    </div>
+  </div>`;
+}
+
+function collectMeta(){
+  const m=Object.assign({},state.masterMeta);
+  $$('[data-meta]').forEach(el=>{ m[el.dataset.meta]=el.value; });
+  const dates=Object.assign({},m.dates||{});
+  $$('[data-metadate]').forEach(el=>{ if(el.value) dates[el.dataset.metadate]=el.value; else delete dates[el.dataset.metadate]; });
+  m.dates=dates;
+  return m;
+}
+function bindReport(){
+  $$('[data-act="print"]').forEach(b=>b.onclick=()=>window.print());
+  let saveTimer=null;
+  const autosave=()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(async()=>{ state.masterMeta=collectMeta(); await Store.saveMaster(state.masterMeta); updateReportAuto(); },800); };
+  $$('[data-meta],[data-metadate]').forEach(el=>el.addEventListener("change",autosave));
+  // keep the "dates delivered" range live as session dates are entered
+  $$('[data-metadate]').forEach(el=>el.addEventListener("input",()=>{ state.masterMeta=collectMeta(); const r=$("#autoDateRange"); if(r) r.textContent=reportDateRange(); }));
+  const sb=$("#saveReport");
+  if(sb) sb.onclick=async()=>{ state.masterMeta=collectMeta(); await Store.saveMaster(state.masterMeta); updateReportAuto(); const p=$("#savePill"); p.classList.add("show"); setTimeout(()=>p.classList.remove("show"),1800); };
+}
+
+/* ---------- MASTER: ANALYTICS (tracker) ---------- */
+function masterAnalytics(){
+  const rows=state.rows;
+  // Dashboard grid
+  const metricRows=[
+    {k:"Responses (n)", f:(s)=>s.n||0},
+    {k:"Q1 – Relevant to my role", f:(s)=>f1(s.qMeans[0])},
+    {k:"Q2 – Pitched at right level", f:(s)=>f1(s.qMeans[1])},
+    {k:"Q3 – Clear & well organised", f:(s)=>f1(s.qMeans[2])},
+    {k:"Q4 – Met learning objectives", f:(s)=>f1(s.qMeans[3])},
+    {k:"Q5 – Felt more confident", f:(s)=>f1(s.qMeans[4])},
+    {k:"Q6 – Would recommend", f:(s)=>f1(s.qMeans[5])},
+    {k:"Mean rating (Q1–Q6)", f:(s)=>f1(s.meanRating)},
+    {k:"Confidence — before", f:(s)=>f1(s.cb)},
+    {k:"Confidence — after", f:(s)=>f1(s.ca)},
+    {k:"Confidence shift (after − before)", f:(s)=>s.shift==null?'—':(s.shift>0?'+':'')+f1(s.shift)}
+  ];
+  const cols=[1,2,3,4].map(n=>stats(rows,n)); const allS=stats(rows,"all");
+  const dash=metricRows.map(mr=>`<tr>
+      <td>${mr.k}</td>${cols.map(s=>`<td>${mr.f(s)}</td>`).join("")}<td>${mr.f(allS)}</td>
+    </tr>`).join("");
+
+  // Responses table
+  const respRows = rows.length ? rows.map(r=>`<tr>
+      <td>${r.session}</td><td>${esc(r.date)}</td><td style="text-align:left">${esc(r.role)}</td>
+      ${r.q.map(v=>`<td>${v}</td>`).join("")}
+      <td>${r.before}</td><td>${r.after}</td><td class="${r.shift>0?'pos':''}">${r.shift==null?'—':(r.shift>0?'+':'')+r.shift}</td>
+      <td style="text-align:left;min-width:140px">${esc(r.mostUseful)}</td>
+      <td style="text-align:left;min-width:140px">${esc(r.toImprove)}</td>
+      <td style="text-align:left;min-width:140px">${esc(r.futureTopics)}</td>
+      <td style="font-variant-numeric:tabular-nums">${r.durationMs?fmtDur(r.durationMs):'—'}</td>
+    </tr>`).join("") : `<tr><td colspan="16" class="empty">No feedback returned yet. Rows appear here automatically as students submit.</td></tr>`;
+
+  return `<div class="card">
+    ${cloudEnabled?"":`<div class="sync-note no-print">ℹ️ <div><b>Offline build.</b> Showing data from this device only — add Firebase config (SETUP.md) for live cross-device sync.</div></div>`}
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <div><span class="eyebrow">📊 Feedback tracker</span><h1 style="margin:0">Dashboard</h1></div>
+      <div class="btn-row no-print" style="margin:0">
+        <button class="btn btn-ghost btn-sm" data-act="csv-resp">⬇ Responses CSV</button>
+        <button class="btn btn-ghost btn-sm" data-act="csv-dash">⬇ Dashboard CSV</button>
+      </div>
+    </div>
+    <p class="muted" style="font-size:13px">Auto-calculated from returned forms. 1 = strongly disagree · 5 = strongly agree. Confidence 1–5. Live total: <b>${rows.length}</b> form${rows.length===1?'':'s'}.</p>
+    <div class="scroll-x"><table class="dtable">
+      <thead><tr><th>Metric</th><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>Overall</th></tr></thead>
+      <tbody>${dash}</tbody>
+    </table></div>
+  </div>
+  <div class="card">
+    <span class="eyebrow">📈 Visual summary</span>
+    <h2 style="margin:6px 0 4px">Charts</h2>
+    <p class="muted" style="font-size:13px;margin-top:-2px">The two tracker charts, auto-updating from the live data.</p>
+    ${chartsBlockHTML()}
+  </div>
+  <div class="card">
+    <h2 style="margin-top:0">Session feedback — responses</h2>
+    <p class="muted" style="font-size:13px;margin-top:-4px">One row per returned form. Identified by sync code only (anonymous).</p>
+    <div class="scroll-x"><table class="dtable">
+      <thead><tr><th>Session</th><th>Date</th><th>Role</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th><th>Q6</th><th>Conf. before</th><th>Conf. after</th><th>Shift</th><th>Most useful</th><th>To improve</th><th>Future topics</th><th>Time</th></tr></thead>
+      <tbody>${respRows}</tbody>
+    </table></div>
+  </div>`;
+}
+function bindAnalytics(){
+  $$('[data-act="csv-resp"]').forEach(b=>b.onclick=()=>downloadResponsesCSV());
+  $$('[data-act="csv-dash"]').forEach(b=>b.onclick=()=>downloadDashboardCSV());
+}
+function csvCell(v){ v=v==null?"":String(v); return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; }
+function downloadCSV(name,rows){
+  const csv=rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
+  const blob=new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function downloadResponsesCSV(){
+  const head=["Session","Date","Role","Q1 Relevant","Q2 Pitched right","Q3 Clear & organised","Q4 Met objectives","Q5 Felt more confident","Q6 Would recommend","Confidence BEFORE","Confidence AFTER","Confidence shift","Most useful","To improve","Future topics","Session time","Sync code"];
+  const body=state.rows.map(r=>[r.session,r.date,r.role,...r.q,r.before,r.after,r.shift,r.mostUseful,r.toImprove,r.futureTopics,r.durationMs?fmtDur(r.durationMs):"",r.syncCode]);
+  downloadCSV("TO-feedback-responses.csv",[head,...body]);
+}
+function downloadDashboardCSV(){
+  const cols=[1,2,3,4].map(n=>stats(state.rows,n)); const allS=stats(state.rows,"all");
+  const metricRows=[
+    ["Responses (n)",...cols.map(s=>s.n||0),allS.n||0],
+    ["Q1 – Relevant to my role",...cols.map(s=>f1c(s.qMeans[0])),f1c(allS.qMeans[0])],
+    ["Q2 – Pitched at right level",...cols.map(s=>f1c(s.qMeans[1])),f1c(allS.qMeans[1])],
+    ["Q3 – Clear & well organised",...cols.map(s=>f1c(s.qMeans[2])),f1c(allS.qMeans[2])],
+    ["Q4 – Met learning objectives",...cols.map(s=>f1c(s.qMeans[3])),f1c(allS.qMeans[3])],
+    ["Q5 – Felt more confident",...cols.map(s=>f1c(s.qMeans[4])),f1c(allS.qMeans[4])],
+    ["Q6 – Would recommend",...cols.map(s=>f1c(s.qMeans[5])),f1c(allS.qMeans[5])],
+    ["Mean rating (Q1–Q6)",...cols.map(s=>f1c(s.meanRating)),f1c(allS.meanRating)],
+    ["Confidence — before",...cols.map(s=>f1c(s.cb)),f1c(allS.cb)],
+    ["Confidence — after",...cols.map(s=>f1c(s.ca)),f1c(allS.ca)],
+    ["Confidence shift",...cols.map(s=>s.shift==null?"":f1c(s.shift)),allS.shift==null?"":f1c(allS.shift)]
+  ];
+  downloadCSV("TO-feedback-dashboard.csv",[["Metric","S1","S2","S3","S4","Overall"],...metricRows]);
+}
+
+/* ============================================================================
+   ROUTING / BOOT
+   ========================================================================== */
+function routeResume(){
+  const s=state.student;
+  if(!s){ navigate("landing"); return; }
+  // active lesson?
+  const active=LESSONS.find(l=>isActive(l.n));
+  if(active){ navigate("lessonActive",{lesson:active.n}); return; }
+  if(!s.needs){ navigate("overview"); return; }
+  if(completedCount()===LESSONS.length){ navigate("map"); return; }
+  navigate("map");
+}
+
+// attach post-render binders
+const _render=render;
+render=function(){
+  _render();
+  switch(state.screen){
+    case "landing": bindLanding(); break;
+    case "code": bindCode(); break;
+    case "overview": bindOverview(); break;
+    case "survey": bindSurvey(); break;
+    case "map": bindMap(); break;
+    case "lessonIntro": bindLessonIntro(); break;
+    case "lessonActive": bindLessonActive(); break;
+    case "feedback": bindFeedback(); break;
+    case "done": bindDone(); break;
+    case "leadGate": bindLeadGate(); break;
+    case "master": bindMaster(); break;
+  }
+};
+
+(async function boot(){
+  await Store.init();
+  const last=localStorage.getItem(LKEY("last"));
+  if(location.hash==="#lead"){ navigate("leadGate"); return; }
+  if(last){
+    const rec=await Store.getStudent(last);
+    if(rec){ state.student=rec; routeResume(); return; }
+  }
+  navigate("landing");
+})();
+</script>
+</body>
+</html>
