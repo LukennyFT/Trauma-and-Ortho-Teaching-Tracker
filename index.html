@@ -255,6 +255,20 @@ ul.objx{margin:0;padding:0}
 .save-pill{font-size:12px;color:var(--success);font-weight:600;opacity:0;transition:.3s}
 .save-pill.show{opacity:1}
 .lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+/* signature pad */
+.sigpad-wrap{position:relative;border:1.5px solid var(--line);border-radius:14px;background:
+  linear-gradient(#fff,#fbfdff);overflow:hidden;box-shadow:inset 0 1px 3px rgba(15,31,51,.05);transition:border-color .2s, box-shadow .2s}
+.sigpad-wrap.signed{border-color:var(--primary);box-shadow:inset 0 1px 3px rgba(14,116,144,.08),0 0 0 3px rgba(14,116,144,.08)}
+.sigpad{display:block;width:100%;height:168px;touch-action:none;cursor:crosshair;-webkit-user-select:none;user-select:none}
+.sigline{position:absolute;left:22px;right:22px;bottom:40px;border-bottom:1.6px solid #c7d5e2;pointer-events:none}
+.sigline::before{content:"✕";position:absolute;left:-2px;bottom:2px;color:#c7d5e2;font-size:13px;font-weight:700}
+.sigph{position:absolute;left:0;right:0;top:50%;transform:translateY(-60%);text-align:center;color:#9fb0c4;font-size:13.5px;
+  pointer-events:none;transition:opacity .2s;display:flex;flex-direction:column;align-items:center;gap:4px}
+.sigph .x{font-size:26px;opacity:.7}
+.sigpad-wrap.signed .sigph,.sigpad-wrap.signed .sigline{opacity:0}
+.sigbar{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:10px}
+.sigbar .sigstatus{font-size:12.5px;font-weight:600;color:var(--ink-faint)}
+.sigbar .sigstatus.ok{color:var(--success)}
 .report-doc h2{font-size:20px;border-bottom:2px solid var(--primary);padding-bottom:8px;margin-top:26px}
 .report-doc h2:first-child{margin-top:0}
 .sync-note{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:12px 14px;font-size:13px;display:flex;gap:9px;align-items:flex-start}
@@ -275,6 +289,8 @@ ul.objx{margin:0;padding:0}
   #app{max-width:100%;padding:0}
   .card{box-shadow:none;padding:0;animation:none}
   .kpi,.info,.dtable th{background:#fff !important}
+  .sigph,.sigline{display:none !important}   /* print only the drawn signature */
+  .sigpad-wrap{border-color:#c7d5e2 !important;box-shadow:none !important}
 }
 </style>
 </head>
@@ -1394,7 +1410,21 @@ function masterReport(){
     <div class="lead-grid" style="margin-top:8px">
       <div><label class="fld">Lead</label>${fld("leadName",m.leadName!=null?m.leadName:PROGRAMME.lead,"")}</div>
       <div><label class="fld">Date</label><input type="date" data-meta="leadDate" value="${esc(m.leadDate||"")}"/></div>
-      <div><label class="fld">Verified by supervisor</label>${fld("verifiedBy",m.verifiedBy,"")}</div>
+    </div>
+
+    <label class="fld">Verified by supervisor — sign below</label>
+    <div class="sigpad-wrap${m.verifiedSignature?' signed':''}" id="sigWrap">
+      <canvas class="sigpad" id="sigPad"></canvas>
+      <div class="sigline"></div>
+      <div class="sigph"><span class="x">✍️</span><span>Sign here — draw with finger, stylus or mouse</span></div>
+      <input type="hidden" data-meta="verifiedSignature" id="sigData" value="${esc(m.verifiedSignature||"")}"/>
+    </div>
+    <div class="sigbar no-print">
+      <span class="sigstatus${m.verifiedSignature?' ok':''}" id="sigStatus">${m.verifiedSignature?'✓ Signed':'Not yet signed'}</span>
+      <button type="button" class="btn btn-ghost btn-sm" id="sigClear">Clear signature</button>
+    </div>
+    <div class="lead-grid" style="margin-top:10px">
+      <div><label class="fld">Supervisor name (optional)</label>${fld("verifiedBy",m.verifiedBy,"Printed name")}</div>
       <div><label class="fld">Date</label><input type="date" data-meta="verifiedDate" value="${esc(m.verifiedDate||"")}"/></div>
     </div>
 
@@ -1422,6 +1452,41 @@ function bindReport(){
   $$('[data-metadate]').forEach(el=>el.addEventListener("input",()=>{ state.masterMeta=collectMeta(); const r=$("#autoDateRange"); if(r) r.textContent=reportDateRange(); }));
   const sb=$("#saveReport");
   if(sb) sb.onclick=async()=>{ state.masterMeta=collectMeta(); await Store.saveMaster(state.masterMeta); updateReportAuto(); const p=$("#savePill"); p.classList.add("show"); setTimeout(()=>p.classList.remove("show"),1800); };
+  setupSignaturePad();
+}
+
+/* Touch/stylus/mouse signature pad for the supervisor's remote sign-off.
+   Stores a PNG data URL in the hidden [data-meta="verifiedSignature"] field, so
+   it saves & syncs through the same master-meta path as every other report field. */
+function setupSignaturePad(){
+  const wrap=$("#sigWrap"), canvas=$("#sigPad"), data=$("#sigData"), status=$("#sigStatus"), clearBtn=$("#sigClear");
+  if(!canvas) return;
+  const dpr=window.devicePixelRatio||1, ctx=canvas.getContext("2d");
+  function fit(){
+    const r=canvas.getBoundingClientRect(), w=Math.max(1,Math.round(r.width)), h=Math.max(1,Math.round(r.height));
+    canvas.width=w*dpr; canvas.height=h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.lineWidth=2.4; ctx.lineCap="round"; ctx.lineJoin="round"; ctx.strokeStyle="#12324a";
+    return {w,h};
+  }
+  const size=fit();
+  if(data.value){ const img=new Image(); img.onload=()=>ctx.drawImage(img,0,0,size.w,size.h); img.src=data.value; }
+  let drawing=false, last=null, dirty=false;
+  const pos=(e)=>{ const r=canvas.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top}; };
+  const commit=()=>{
+    data.value=canvas.toDataURL("image/png");
+    data.dispatchEvent(new Event("change",{bubbles:true}));   // -> autosave to master doc
+    status.textContent="✓ Signed — saved"; status.classList.add("ok");
+  };
+  canvas.addEventListener("pointerdown",e=>{ e.preventDefault(); drawing=true; last=pos(e); wrap.classList.add("signed"); try{canvas.setPointerCapture(e.pointerId);}catch(_){} });
+  canvas.addEventListener("pointermove",e=>{ if(!drawing)return; e.preventDefault(); const p=pos(e); ctx.beginPath(); ctx.moveTo(last.x,last.y); ctx.lineTo(p.x,p.y); ctx.stroke(); last=p; dirty=true; });
+  const stop=()=>{ if(!drawing)return; drawing=false; if(dirty) commit(); };
+  canvas.addEventListener("pointerup",stop);
+  canvas.addEventListener("pointercancel",stop);
+  if(clearBtn) clearBtn.onclick=()=>{
+    ctx.clearRect(0,0,canvas.width,canvas.height); dirty=false;
+    data.value=""; data.dispatchEvent(new Event("change",{bubbles:true}));
+    wrap.classList.remove("signed"); status.textContent="Not yet signed"; status.classList.remove("ok");
+  };
 }
 
 /* ---------- MASTER: ANALYTICS (tracker) ---------- */
