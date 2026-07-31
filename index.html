@@ -440,6 +440,34 @@ function loadScript(src){
   return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); });
 }
 
+/* Merge a cloud record with a local one, keeping the richest version of each
+   lesson. Returns the merged record plus how many lessons the LOCAL copy
+   contributed (i.e. feedback captured while the app was offline). */
+function mergeStudentRecords(cloud, local){
+  const merged=Object.assign({},cloud);
+  let recovered=0;
+  merged.needs = cloud.needs || local.needs || null;
+  if(!cloud.needs && local.needs) recovered++;
+  const cl=cloud.lessons||{}, ll=local.lessons||{};
+  const out=Object.assign({},cl);
+  Object.keys(ll).forEach(k=>{
+    const a=cl[k], b=ll[k];
+    if(!b) return;
+    if(!a){ out[k]=b; if(b.feedback) recovered++; return; }
+    // both exist — prefer whichever actually has feedback; if both, the later one
+    if(a.feedback && b.feedback){
+      out[k] = (b.feedback.submittedAt||0) > (a.feedback.submittedAt||0) ? b : a;
+    } else if(b.feedback && !a.feedback){
+      out[k]=b; recovered++;
+    } else {
+      out[k]=a;
+    }
+  });
+  merged.lessons=out;
+  if((local.updatedAt||0)>(cloud.updatedAt||0)) merged.updatedAt=local.updatedAt;
+  return {merged,recovered};
+}
+
 const Store = {
   ready:false,
   async init(){
@@ -462,9 +490,24 @@ const Store = {
     if(db){ try{ await this._col().doc(rec.syncCode).set(rec,{merge:true}); }catch(e){ console.error("cloud save failed",e);} }
   },
   async getStudent(code){
-    if(db){ try{ const d=await this._col().doc(code).get(); if(d.exists) return d.data(); }catch(e){ console.error(e);} }
-    const raw=localStorage.getItem(LKEY("student:"+code));
-    return raw?JSON.parse(raw):null;
+    // Read BOTH sides and merge. Anything recorded while the app was running
+    // offline lives only in localStorage — merging recovers it and pushes it up,
+    // instead of the cloud copy silently overwriting it.
+    let local=null;
+    try{ const raw=localStorage.getItem(LKEY("student:"+code)); if(raw) local=JSON.parse(raw); }catch(e){}
+    let cloud=null;
+    if(db){ try{ const d=await this._col().doc(code).get(); if(d.exists) cloud=d.data(); }catch(e){ console.error(e); } }
+    if(!cloud) return local;
+    if(!local) return cloud;
+    const {merged,recovered}=mergeStudentRecords(cloud,local);
+    if(db && recovered>0){
+      try{
+        await this._col().doc(code).set(merged,{merge:true});
+        console.info(`Recovered ${recovered} offline lesson record(s) for ${code} and synced to cloud.`);
+      }catch(e){ console.error("recovery sync failed",e); }
+    }
+    localStorage.setItem(LKEY("student:"+code),JSON.stringify(merged));
+    return merged;
   },
   _localStudents(){
     const out=[]; const pre=LKEY("student:");
@@ -1411,6 +1454,10 @@ function masterReport(){
       <div><label class="fld">Lead</label>${fld("leadName",m.leadName!=null?m.leadName:PROGRAMME.lead,"")}</div>
       <div><label class="fld">Date</label><input type="date" data-meta="leadDate" value="${esc(m.leadDate||"")}"/></div>
     </div>
+
+    <label class="fld">Supervisor comments</label>
+    <p class="muted" style="font-size:12.5px;margin:-2px 0 6px">For the supervising consultant — written feedback on the programme, its delivery and impact.</p>
+    ${fld("supervisorComments",m.supervisorComments,"e.g. comments on the quality of teaching, the evaluation approach, and the lead’s development…",true)}
 
     <label class="fld">Verified by supervisor — sign below</label>
     <div class="sigpad-wrap${m.verifiedSignature?' signed':''}" id="sigWrap">
