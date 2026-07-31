@@ -1300,8 +1300,18 @@ function themesHTML(field){
   return items.length?`<ul class="theme-list">${items.join("")}</ul>`:`<div class="empty">No comments yet.</div>`;
 }
 function reportResultsHTML(){
-  const ratingRow=(label,sess)=>{ const s=stats(state.rows,sess); return `<tr class="${sess==='all'?'overall':''}">
-      <td>${label}</td><td>${s.n||0}</td><td>${f1(s.meanRating)}</td><td>${f1(s.cb)}</td><td>${f1(s.ca)}</td>
+  const ratingRow=(label,sess)=>{
+    const s=stats(state.rows,sess);
+    const r = sess==='all' ? state.rows : state.rows.filter(x=>x.session===sess);
+    // count PEOPLE, not forms — so the Overall row counts each student once
+    // rather than summing sessions. (Per session the two are identical, since a
+    // student returns at most one form per lesson.)
+    const people=new Set(r.map(x=>x.syncCode)).size;
+    const nCell = sess==='all'
+      ? `${people}<span class="muted" style="font-size:11px;font-weight:400"> · ${s.n} form${s.n===1?'':'s'}</span>`
+      : `${people}`;
+    return `<tr class="${sess==='all'?'overall':''}">
+      <td>${label}</td><td>${nCell}</td><td>${f1(s.meanRating)}</td><td>${f1(s.cb)}</td><td>${f1(s.ca)}</td>
       <td class="${s.shift>0?'pos':''}">${s.shift==null?'—':(s.shift>0?'+':'')+f1(s.shift)}</td></tr>`; };
   return LESSONS.map(l=>ratingRow(`${l.n} – ${l.short}`,l.n)).join("")+ratingRow("Overall","all");
 }
@@ -1416,7 +1426,7 @@ function masterReport(){
     ${fld("overview",m.overview,"1–2 sentences: what was delivered, the format, and how feedback was collected each session.",true)}
 
     <h2>Results at a glance</h2>
-    <p class="muted" style="font-size:13px;margin-top:-6px">Auto-filled from the feedback tracker. Ratings &amp; confidence 1–5.</p>
+    <p class="muted" style="font-size:13px;margin-top:-6px">Auto-filled from the feedback tracker. Ratings &amp; confidence 1–5. <b>Attendees</b> = students who returned a form; the Overall row counts each student <b>once</b>, while the means are calculated across all returned forms.</p>
     <div class="scroll-x"><table class="dtable">
       <thead><tr><th>Session</th><th>Attendees (n)</th><th>Mean rating (Q1–Q6)</th><th>Conf. before</th><th>Conf. after</th><th>Shift</th></tr></thead>
       <tbody id="autoResults">${reportResultsHTML()}</tbody>
